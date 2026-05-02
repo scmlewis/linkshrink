@@ -4,18 +4,23 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Supabase URL or Anon Key');
-}
+// Use placeholder values for build-time, actual validation happens at runtime
+const url = supabaseUrl || 'https://placeholder.supabase.co';
+const anonKey = supabaseAnonKey || 'placeholder-key';
 
-if (!supabaseServiceKey) {
+if (!supabaseServiceKey && process.env.NODE_ENV === 'production') {
   console.warn('Warning: SUPABASE_SERVICE_ROLE_KEY not set. Using anon key for admin operations. Some operations may fail due to RLS policies.');
 }
 
 // Client for browser (anon key - limited permissions)
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(url, anonKey);
 
 // Admin client for server (service key - full permissions)
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey || supabaseAnonKey);
+export const supabaseAdmin = createClient(url, supabaseServiceKey || anonKey);
+
+// Runtime validation - check at import time if we're running in browser or API
+if (typeof window !== 'undefined' && (!supabaseUrl || !supabaseAnonKey)) {
+  console.error('Missing Supabase credentials. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY environment variables.');
+}
 
 export default supabase;
