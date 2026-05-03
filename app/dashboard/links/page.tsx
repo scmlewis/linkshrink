@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -42,7 +42,7 @@ export default function LinksPage() {
     return Array.from(tags).sort();
   }, [links]);
 
-  const fetchLinks = async () => {
+  const fetchLinks = useCallback(async () => {
     try {
       setIsLoading(true);
       const params = new URLSearchParams({
@@ -65,12 +65,12 @@ export default function LinksPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [currentPage, filterTag, searchQuery, sortBy]);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     void fetchLinks();
-  }, [currentPage, searchQuery, sortBy, filterTag]);
+  }, [fetchLinks]);
 
   const handleCreateLink = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -104,7 +104,7 @@ export default function LinksPage() {
         setCurrentPage(1);
         fetchLinks();
       }
-    } catch (error) {
+    } catch {
       setError('An error occurred. Please try again.');
     } finally {
       setIsCreating(false);

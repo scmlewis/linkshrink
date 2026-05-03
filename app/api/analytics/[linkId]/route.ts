@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
-import { getLinkAnalytics, getUserAnalyticsSummary } from '@/lib/analytics';
+import { getLinkAnalytics } from '@/lib/analytics';
 
 /**
  * GET /api/analytics/[linkId] - Get analytics for a specific link
  */
 export async function GET(
-  req: NextRequest,
+  _req: NextRequest,
   { params }: { params: Promise<{ linkId: string }> }
 ) {
   try {

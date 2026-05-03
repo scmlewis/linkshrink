@@ -99,11 +99,11 @@ export default function ApiKeysPage() {
     }
   };
 
-  const handleCopyKey = async (key: string, keyId: string) => {
+  const handleCopyKey = async (key: string) => {
     try {
       await navigator.clipboard.writeText(key);
       addToast('API key copied to clipboard', 'success');
-    } catch (error) {
+    } catch {
       addToast('Failed to copy API key', 'error');
     }
   };
@@ -188,7 +188,7 @@ export default function ApiKeysPage() {
                   <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => handleCopyKey(createdKey.key, createdKey.id)}
+                    onClick={() => handleCopyKey(createdKey.key)}
                   >
                     <span className="material-symbols-outlined">content_copy</span>
                   </Button>

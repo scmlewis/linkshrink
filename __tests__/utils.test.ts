@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { buildShortUrl, formatNumber, formatDate, copyToClipboard } from '@/lib/utils';
+import { buildShortUrl, formatNumber, formatDate } from '@/lib/utils';
 
 describe('Utility Functions', () => {
   describe('formatNumber', () => {

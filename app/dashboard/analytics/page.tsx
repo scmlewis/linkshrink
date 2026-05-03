@@ -4,11 +4,10 @@ import { useCallback, useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Select } from '@/components/ui/Select';
 import { Spinner } from '@/components/ui/Spinner';
-import { AnalyticsSummary, LinkAnalytics } from '@/lib/types';
+import { AnalyticsSummary } from '@/lib/types';
 import { formatNumber } from '@/lib/utils';
 
 export default function AnalyticsPage() {
-  const [analytics, setAnalytics] = useState<LinkAnalytics[]>([]);
   const [summary, setSummary] = useState<AnalyticsSummary | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [dateRange, setDateRange] = useState('30days');
@@ -24,7 +23,6 @@ export default function AnalyticsPage() {
         setSummary(summaryData);
       }
 
-      setAnalytics([]);
     } catch (error) {
       console.error('Failed to fetch analytics:', error);
     } finally {
@@ -47,7 +45,6 @@ export default function AnalyticsPage() {
 
   const totalClicks = summary?.total_clicks || 0;
   const clicksToday = summary?.clicks_today || 0;
-  const topReferrer = summary?.top_referrer || 'Direct';
   const topCountry = summary?.top_country || 'N/A';
 
   return (
@@ -107,7 +104,7 @@ export default function AnalyticsPage() {
               <div className="flex items-start justify-between">
                 <div>
                   <div className="text-3xl font-bold text-tertiary mb-1">
-                    {topReferrer}
+                    {summary?.top_referrer || 'Direct'}
                   </div>
                   <div className="text-sm text-on-surface-variant">Top Referrer</div>
                 </div>

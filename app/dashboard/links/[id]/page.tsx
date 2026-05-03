@@ -63,7 +63,7 @@ export default function LinkDetailPage({ params }: LinkDetailPageProps) {
             }
           }
         }
-      } catch (fetchError) {
+      } catch {
         if (isActive) {
           setError('Failed to load link');
         }

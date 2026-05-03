@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getUserAnalyticsSummary } from '@/lib/analytics';
 
 /**
  * GET /api/analytics - Get user analytics summary
  */
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     const session = await auth();
 
