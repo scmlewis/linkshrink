@@ -17,8 +17,8 @@ export async function recordClick(
     const { device_type, os, browser } = parseUserAgent(request.user_agent || '');
 
     // Try to get geo data (optional)
-    let country = 'Unknown';
-    let city = 'Unknown';
+    const country = 'Unknown';
+    const city = 'Unknown';
 
     try {
       // Using ip-api or similar service would go here

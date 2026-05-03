@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
+import { Card, CardContent } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Modal } from '@/components/ui/Modal';
 import { Spinner } from '@/components/ui/Spinner';
@@ -27,13 +27,8 @@ export default function ApiKeysPage() {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null);
   const [keyName, setKeyName] = useState('');
   const [createdKey, setCreatedKey] = useState<ApiKey | null>(null);
-  const [copiedKeyId, setCopiedKeyId] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchApiKeys();
-  }, []);
-
-  const fetchApiKeys = async () => {
+  const fetchApiKeys = useCallback(async () => {
     try {
       setIsLoading(true);
       const res = await fetch('/api/api-keys');
@@ -47,7 +42,12 @@ export default function ApiKeysPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [addToast]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void fetchApiKeys();
+  }, [fetchApiKeys]);
 
   const handleCreateKey = async () => {
     if (!keyName.trim()) {
@@ -102,8 +102,6 @@ export default function ApiKeysPage() {
   const handleCopyKey = async (key: string, keyId: string) => {
     try {
       await navigator.clipboard.writeText(key);
-      setCopiedKeyId(keyId);
-      setTimeout(() => setCopiedKeyId(null), 2000);
       addToast('API key copied to clipboard', 'success');
     } catch (error) {
       addToast('Failed to copy API key', 'error');
@@ -178,7 +176,7 @@ export default function ApiKeysPage() {
             <>
               <div className="bg-warning/10 border border-warning/20 rounded-lg p-4 space-y-2">
                 <p className="text-sm font-semibold text-on-surface">
-                  Save your API key now - you won't see it again!
+                  Save your API key now - you won&apos;t see it again!
                 </p>
                 <div className="flex gap-2">
                   <input

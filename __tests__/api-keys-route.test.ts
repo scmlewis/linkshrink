@@ -100,10 +100,8 @@ describe('POST /api/api-keys', () => {
       last_used_at: null,
     };
     
-    let capturedInsertData: Record<string, unknown> = {};
     const query = {
       insert: vi.fn().mockImplementation((data: Record<string, unknown>) => {
-        capturedInsertData = data;
         return {
           select: vi.fn().mockReturnThis(),
           single: vi.fn().mockResolvedValue({

@@ -1,13 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useState, useCallback } from 'react';
-import { FormField, FormState, ValidationRule, validateField } from './validation';
+import { ValidationRule, validateField } from './validation';
+
+type FormValues = Record<string, any>;
 
 interface UseFormOptions {
-  onSubmit?: (values: Record<string, any>) => void | Promise<void>;
-  initialValues?: Record<string, any>;
+  onSubmit?: (values: FormValues) => void | Promise<void>;
+  initialValues?: FormValues;
 }
 
 interface UseFormReturn {
-  values: Record<string, any>;
+  values: FormValues;
   errors: Record<string, string | undefined>;
   touched: Record<string, boolean>;
   isDirty: boolean;
@@ -27,7 +31,7 @@ interface UseFormReturn {
 export function useForm(options: UseFormOptions = {}): UseFormReturn {
   const { onSubmit, initialValues = {} } = options;
 
-  const [values, setValues] = useState<Record<string, any>>(initialValues);
+  const [values, setValues] = useState<FormValues>(initialValues);
   const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [isDirty, setIsDirty] = useState(false);
@@ -72,8 +76,9 @@ export function useForm(options: UseFormOptions = {}): UseFormReturn {
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-      const { name, type, value, checked } = e.target as any;
-      const newValue = type === 'checkbox' ? checked : value;
+      const target = e.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+      const { name } = target;
+      const newValue = target instanceof HTMLInputElement && target.type === 'checkbox' ? target.checked : target.value;
       setFieldValue(name, newValue);
     },
     [setFieldValue]

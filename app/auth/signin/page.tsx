@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -30,7 +31,7 @@ export default function SignIn() {
       } else {
         router.push('/dashboard');
       }
-    } catch (err) {
+    } catch {
       setError('An error occurred. Please try again.');
     } finally {
       setIsLoading(false);
@@ -116,10 +117,10 @@ export default function SignIn() {
 
           {/* Sign Up Link */}
           <p className="text-center text-on-surface-variant text-sm mt-6">
-            Don't have an account?{' '}
-            <a href="/auth/signup" className="text-primary hover:underline font-semibold">
+            Don&apos;t have an account?{' '}
+            <Link href="/auth/signup" className="text-primary hover:underline font-semibold">
               Sign up
-            </a>
+            </Link>
           </p>
         </div>
 

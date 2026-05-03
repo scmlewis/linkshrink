@@ -3,15 +3,15 @@ import { buildShortUrl, formatNumber, formatDate, copyToClipboard } from '@/lib/
 
 describe('Utility Functions', () => {
   describe('formatNumber', () => {
-    it('should format numbers with commas', () => {
-      expect(formatNumber(1000)).toBe('1,000');
-      expect(formatNumber(1000000)).toBe('1,000,000');
+    it('should format numbers compactly', () => {
+      expect(formatNumber(1000)).toBe('1.0K');
+      expect(formatNumber(1000000)).toBe('1.0M');
       expect(formatNumber(100)).toBe('100');
       expect(formatNumber(0)).toBe('0');
     });
 
     it('should handle very large numbers', () => {
-      expect(formatNumber(1500000)).toBe('1,500,000');
+      expect(formatNumber(1500000)).toBe('1.5M');
     });
   });
 

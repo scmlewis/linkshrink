@@ -1,11 +1,11 @@
 'use client';
 
+import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { useForm } from '@/lib/useForm';
-import { validators } from '@/lib/validation';
 
 export default function SignUp() {
   const router = useRouter();
@@ -35,7 +35,7 @@ export default function SignUp() {
         } else {
           router.push('/dashboard');
         }
-      } catch (err) {
+      } catch {
         form.setFieldError('email', 'An error occurred. Please try again.');
       }
     },
@@ -141,9 +141,9 @@ export default function SignUp() {
           {/* Sign In Link */}
           <p className="text-center text-on-surface-variant text-sm mt-6">
             Already have an account?{' '}
-            <a href="/auth/signin" className="text-primary hover:underline font-semibold">
+            <Link href="/auth/signin" className="text-primary hover:underline font-semibold">
               Sign in
-            </a>
+            </Link>
           </p>
         </div>
 

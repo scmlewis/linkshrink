@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -21,7 +21,6 @@ export default function LinksPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('created');
   const [filterTag, setFilterTag] = useState('');
-  const [allTags, setAllTags] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [deleteConfirmLink, setDeleteConfirmLink] = useState<LinkType | null>(null);
@@ -35,17 +34,12 @@ export default function LinksPage() {
   const [error, setError] = useState('');
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchLinks();
-  }, [currentPage, searchQuery, sortBy, filterTag]);
-
-  useEffect(() => {
-    // Extract all unique tags from links
+  const allTags = useMemo(() => {
     const tags = new Set<string>();
     links.forEach((link) => {
       link.tags?.forEach((tag) => tags.add(tag));
     });
-    setAllTags(Array.from(tags).sort());
+    return Array.from(tags).sort();
   }, [links]);
 
   const fetchLinks = async () => {
@@ -72,6 +66,11 @@ export default function LinksPage() {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void fetchLinks();
+  }, [currentPage, searchQuery, sortBy, filterTag]);
 
   const handleCreateLink = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -94,8 +94,8 @@ describe('useForm Hook', () => {
 
   describe('form submission', () => {
     it('should handle form submission', async () => {
-      let submittedValues: any;
-      const onSubmit = (values: any) => {
+      let submittedValues: { email: string } | undefined;
+      const onSubmit = (values: { email: string }) => {
         submittedValues = values;
       };
 
@@ -106,8 +106,9 @@ describe('useForm Hook', () => {
         })
       );
 
-      const event = new Event('submit') as any;
-      event.preventDefault = () => {};
+      const event = {
+        preventDefault: () => {},
+      } as React.FormEvent<HTMLFormElement>;
 
       await act(async () => {
         await result.current.handleSubmit(event);
@@ -123,8 +124,9 @@ describe('useForm Hook', () => {
 
       const { result } = renderHook(() => useForm({ onSubmit }));
 
-      const event = new Event('submit') as any;
-      event.preventDefault = () => {};
+      const event = {
+        preventDefault: () => {},
+      } as React.FormEvent<HTMLFormElement>;
 
       const submitPromise = act(async () => {
         await result.current.handleSubmit(event);

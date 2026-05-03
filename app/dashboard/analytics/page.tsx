@@ -1,12 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Select } from '@/components/ui/Select';
-import { Spinner, LoadingState } from '@/components/ui/Spinner';
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Spinner } from '@/components/ui/Spinner';
 import { AnalyticsSummary, LinkAnalytics } from '@/lib/types';
-import { formatNumber, formatDate } from '@/lib/utils';
+import { formatNumber } from '@/lib/utils';
 
 export default function AnalyticsPage() {
   const [analytics, setAnalytics] = useState<LinkAnalytics[]>([]);
@@ -14,13 +13,7 @@ export default function AnalyticsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [dateRange, setDateRange] = useState('30days');
 
-  useEffect(() => {
-    fetchAnalytics();
-  }, [dateRange]);
-
-  const fetchAnalytics = async () => {
-    let isActive = true;
-
+  const fetchAnalytics = useCallback(async () => {
     try {
       setIsLoading(true);
       const params = new URLSearchParams({ range: dateRange });
@@ -28,22 +21,21 @@ export default function AnalyticsPage() {
       const summaryRes = await fetch(`/api/analytics?${params}`);
       if (summaryRes.ok) {
         const summaryData = await summaryRes.json();
-        if (isActive) {
-          setSummary(summaryData);
-        }
+        setSummary(summaryData);
       }
 
-      if (isActive) {
-        setAnalytics([]);
-      }
+      setAnalytics([]);
     } catch (error) {
       console.error('Failed to fetch analytics:', error);
     } finally {
-      if (isActive) {
-        setIsLoading(false);
-      }
+      setIsLoading(false);
     }
-  };
+  }, [dateRange]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void fetchAnalytics();
+  }, [fetchAnalytics]);
 
   if (isLoading) {
     return (
@@ -53,11 +45,9 @@ export default function AnalyticsPage() {
     );
   }
 
-  const firstAnalytic = analytics[0];
   const totalClicks = summary?.total_clicks || 0;
   const clicksToday = summary?.clicks_today || 0;
   const topReferrer = summary?.top_referrer || 'Direct';
-  const topDevice = summary?.top_device || 'N/A';
   const topCountry = summary?.top_country || 'N/A';
 
   return (

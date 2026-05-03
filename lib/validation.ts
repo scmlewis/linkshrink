@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 // Form field value and error states
 export interface FormField<T = string> {
   value: T;
