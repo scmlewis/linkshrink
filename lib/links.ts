@@ -11,6 +11,7 @@ export async function createLink(
   options?: {
     customAlias?: string;
     title?: string;
+    nickname?: string;
     description?: string;
     tags?: string[];
   }
@@ -60,6 +61,7 @@ export async function createLink(
           original_url: normalizedUrl,
           custom_alias: options?.customAlias,
           title: options?.title,
+          nickname: options?.nickname,
           description: options?.description,
           is_active: true,
         },

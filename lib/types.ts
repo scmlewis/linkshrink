@@ -17,6 +17,7 @@ export interface Link {
   original_url: string;
   custom_alias?: string;
   title?: string;
+  nickname?: string;
   description?: string;
   created_at: Date;
   expires_at?: Date;

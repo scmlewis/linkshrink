@@ -12,7 +12,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const baseStyles = 'font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-2 border border-transparent hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary';
 
     const variantStyles = {
-      primary: 'bg-primary-container text-on-primary-container hover:bg-primary disabled:opacity-60 shadow-lg shadow-primary/20 hover:shadow-primary/40 focus-visible:ring-offset-surface',
+      primary: 'bg-primary text-on-primary hover:bg-[#1a3a8a] disabled:opacity-60 shadow-lg shadow-primary/30 hover:shadow-primary/50 focus-visible:ring-offset-surface font-semibold',
       secondary: 'bg-secondary text-on-secondary hover:bg-secondary-container disabled:opacity-60 focus-visible:ring-secondary',
       outline: 'border-outline text-on-surface hover:border-surface-tint hover:text-surface-tint hover:bg-surface-container disabled:opacity-60 focus-visible:ring-outline',
       danger: 'bg-error text-on-error hover:bg-error-container disabled:opacity-60 focus-visible:ring-error',

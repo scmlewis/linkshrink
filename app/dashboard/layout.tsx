@@ -137,7 +137,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       >
         <div className="px-6 mb-10 flex flex-col gap-1">
           <span className="text-lg font-black text-primary">LinkShrink</span>
-          {sidebarOpen && <span className="text-xs text-on-surface-variant">V2.4.0</span>}
         </div>
         <div className="flex-1 flex flex-col gap-2">
           {NAV_ITEMS.map((item) => {

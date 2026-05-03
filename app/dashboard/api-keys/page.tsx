@@ -119,26 +119,28 @@ export default function ApiKeysPage() {
   }
 
   return (
-    <div className="space-y-6 max-w-4xl">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-h1 font-bold text-on-surface">API Keys</h1>
-          <p className="text-body-md text-on-surface-variant">
-            Manage API keys for programmatic access
-          </p>
+    <div className="flex items-center justify-center min-h-screen px-4 py-8">
+      <div className="space-y-6 max-w-4xl w-full">
+        {/* Header */}
+        <div className="flex flex-col items-center justify-center text-center">
+          <div>
+            <h1 className="text-h1 font-bold text-on-surface">API Keys</h1>
+            <p className="text-body-md text-on-surface-variant">
+              Manage API keys for programmatic access
+            </p>
+          </div>
+          <Button
+            variant="primary"
+            onClick={() => setShowCreateModal(true)}
+            className="mt-4"
+          >
+            <span className="material-symbols-outlined">add</span>
+            Create Key
+          </Button>
         </div>
-        <Button
-          variant="primary"
-          onClick={() => setShowCreateModal(true)}
-        >
-          <span className="material-symbols-outlined">add</span>
-          Create Key
-        </Button>
-      </div>
 
-      {/* Create Modal */}
-      <Modal
+        {/* Create Modal */}
+        <Modal
         isOpen={showCreateModal}
         onClose={() => !createdKey && setShowCreateModal(false)}
         title="Create API Key"
@@ -210,8 +212,8 @@ export default function ApiKeysPage() {
         </div>
       </Modal>
 
-      {/* API Keys List */}
-      {apiKeys.length > 0 ? (
+        {/* API Keys List */}
+        {apiKeys.length > 0 ? (
         <div className="space-y-3">
           {apiKeys.map((apiKey) => (
             <Card key={apiKey.id}>
@@ -278,21 +280,22 @@ export default function ApiKeysPage() {
         </Card>
       )}
 
-      {/* Delete Confirmation Modal */}
-      <Modal
-        isOpen={!!showDeleteConfirm}
-        onClose={() => setShowDeleteConfirm(null)}
-        title="Delete API Key?"
-        description="This action cannot be undone. Any applications using this key will stop working."
-        actions={[
-          { label: 'Cancel', onClick: () => setShowDeleteConfirm(null), variant: 'outline' },
-          {
-            label: 'Delete',
-            onClick: () => showDeleteConfirm && handleDeleteKey(showDeleteConfirm),
-            variant: 'danger',
-          },
-        ]}
-      />
+        {/* Delete Confirmation Modal */}
+        <Modal
+          isOpen={!!showDeleteConfirm}
+          onClose={() => setShowDeleteConfirm(null)}
+          title="Delete API Key?"
+          description="This action cannot be undone. Any applications using this key will stop working."
+          actions={[
+            { label: 'Cancel', onClick: () => setShowDeleteConfirm(null), variant: 'outline' },
+            {
+              label: 'Delete',
+              onClick: () => showDeleteConfirm && handleDeleteKey(showDeleteConfirm),
+              variant: 'danger',
+            },
+          ]}
+        />
+      </div>
     </div>
   );
 }

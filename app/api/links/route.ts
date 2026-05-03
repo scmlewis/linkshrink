@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     }
 
     const body = await req.json();
-    const { originalUrl, customAlias, title, description, tags } = body;
+    const { originalUrl, customAlias, title, nickname, description, tags } = body;
 
     if (!originalUrl) {
       return NextResponse.json({ error: 'Original URL is required' }, { status: 400 });
@@ -51,6 +51,7 @@ export async function POST(req: NextRequest) {
     const response = await createLink(session.user.id, originalUrl, {
       customAlias,
       title,
+      nickname,
       description,
       tags,
     });

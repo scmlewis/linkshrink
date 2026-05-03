@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { Modal } from '@/components/ui/Modal';
 import { buildShortUrl, copyToClipboard, formatNumber, formatDate } from '@/lib/utils';
 import { AnalyticsSummary, Link as LinkType } from '@/lib/types';
 
@@ -14,11 +15,15 @@ export default function DashboardHome() {
   const [recentLinks, setRecentLinks] = useState<LinkType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [longUrl, setLongUrl] = useState('');
+  const [nickname, setNickname] = useState('');
   const [isCreating, setIsCreating] = useState(false);
   const [createError, setCreateError] = useState('');
   const [createdLink, setCreatedLink] = useState<LinkType | null>(null);
   const [createdQr, setCreatedQr] = useState('');
   const [copied, setCopied] = useState(false);
+  const [editingLink, setEditingLink] = useState<LinkType | null>(null);
+  const [editNickname, setEditNickname] = useState('');
+  const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,7 +61,7 @@ export default function DashboardHome() {
       const res = await fetch('/api/links', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ originalUrl: longUrl }),
+        body: JSON.stringify({ originalUrl: longUrl, nickname: nickname || undefined }),
       });
 
       if (!res.ok) {
@@ -68,6 +73,7 @@ export default function DashboardHome() {
       const data = await res.json();
       setCreatedLink(data);
       setLongUrl('');
+      setNickname('');
 
       const qrRes = await fetch(`/api/qr/${data.id}`);
       if (qrRes.ok) {
@@ -92,6 +98,40 @@ export default function DashboardHome() {
     if (await copyToClipboard(shortUrl)) {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
+    }
+  };
+
+  const handleEditLink = (link: LinkType) => {
+    setEditingLink(link);
+    setEditNickname(link.nickname || '');
+  };
+
+  const handleUpdateLink = async () => {
+    if (!editingLink) return;
+
+    setIsUpdating(true);
+    try {
+      const res = await fetch(`/api/links/${editingLink.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nickname: editNickname || null }),
+      });
+
+      if (!res.ok) {
+        console.error('Failed to update link');
+        return;
+      }
+
+      const updatedLink = await res.json();
+      setRecentLinks(
+        recentLinks.map((link) => (link.id === updatedLink.id ? updatedLink : link))
+      );
+      setEditingLink(null);
+      setEditNickname('');
+    } catch (error) {
+      console.error('Failed to update link:', error);
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -129,15 +169,27 @@ export default function DashboardHome() {
           </div>
         </div>
         <div className="relative z-10 mt-8 flex flex-col gap-4 md:flex-row">
-          <div className="flex-1 text-left">
-            <label className="text-label-caps uppercase text-on-surface-variant mb-2 block text-xs">Destination URL</label>
-            <input
-              className="w-full bg-black/80 border-2 border-outline-variant rounded-lg px-4 py-3 text-on-surface placeholder-on-surface-variant focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-outline transition-all duration-200"
-              placeholder="Paste your long link here..."
-              value={longUrl}
-              onChange={(event) => setLongUrl(event.target.value)}
-              type="url"
-            />
+          <div className="flex-1 flex flex-col gap-4">
+            <div className="text-left">
+              <label className="text-label-caps uppercase text-on-surface-variant mb-2 block text-xs">Destination URL</label>
+              <input
+                className="w-full bg-black/80 border-2 border-outline-variant rounded-lg px-4 py-3 text-on-surface placeholder-on-surface-variant focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-outline transition-all duration-200"
+                placeholder="Paste your long link here..."
+                value={longUrl}
+                onChange={(event) => setLongUrl(event.target.value)}
+                type="url"
+              />
+            </div>
+            <div className="text-left">
+              <label className="text-label-caps uppercase text-on-surface-variant mb-2 block text-xs">Nickname (optional)</label>
+              <input
+                className="w-full bg-black/80 border-2 border-outline-variant rounded-lg px-4 py-3 text-on-surface placeholder-on-surface-variant focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-outline transition-all duration-200"
+                placeholder="Give your link a memorable name..."
+                value={nickname}
+                onChange={(event) => setNickname(event.target.value)}
+                type="text"
+              />
+            </div>
           </div>
           <Button
             variant="primary"
@@ -199,7 +251,7 @@ export default function DashboardHome() {
                     <div className="flex flex-wrap items-center gap-3">
                       <div className="flex flex-col min-w-0">
                         <span className="text-on-surface font-semibold truncate">
-                          {link.title || 'Untitled link'}
+                          {link.nickname || link.title || 'Untitled link'}
                         </span>
                         <Link
                           href={buildShortUrl(link.short_code, typeof window !== 'undefined' ? window.location.origin : '')}
@@ -213,6 +265,9 @@ export default function DashboardHome() {
                         <Button variant="outline" size="sm" onClick={() => handleCopy(link.short_code)}>
                           <span className="material-symbols-outlined">content_copy</span>
                         </Button>
+                        <Button variant="outline" size="sm" onClick={() => handleEditLink(link)} title="Edit link">
+                          <span className="material-symbols-outlined">edit</span>
+                        </Button>
                         <Link href={`/dashboard/links/${link.id}`} className="text-on-surface-variant hover:text-primary">
                           <span className="material-symbols-outlined">bar_chart</span>
                         </Link>
@@ -220,7 +275,7 @@ export default function DashboardHome() {
                     </div>
                     <div className="flex items-center gap-2 text-sm text-on-surface-variant mt-2">
                       <span className="material-symbols-outlined text-sm">link</span>
-                      <span className="truncate">{link.original_url}</span>
+                      <span className="truncate text-xs sm:text-sm overflow-hidden whitespace-nowrap text-ellipsis">{link.original_url}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 md:border-l md:border-outline-variant md:pl-6">
@@ -241,6 +296,49 @@ export default function DashboardHome() {
           </Card>
         )}
       </section>
+
+      {/* Edit Link Modal */}
+      <Modal
+        isOpen={!!editingLink}
+        onClose={() => {
+          setEditingLink(null);
+          setEditNickname('');
+        }}
+        title="Edit Link"
+        description="Update your link's nickname"
+      >
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-on-surface mb-2">Nickname</label>
+            <input
+              type="text"
+              placeholder="Give your link a memorable name..."
+              value={editNickname}
+              onChange={(e) => setEditNickname(e.target.value)}
+              className="w-full px-4 py-2 bg-black/80 border border-outline-variant rounded-lg text-on-surface placeholder-on-surface-variant focus:outline-none focus:border-primary"
+            />
+          </div>
+          <div className="flex gap-2 justify-end">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setEditingLink(null);
+                setEditNickname('');
+              }}
+              disabled={isUpdating}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              onClick={handleUpdateLink}
+              isLoading={isUpdating}
+            >
+              Save
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

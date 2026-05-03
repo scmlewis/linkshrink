@@ -307,12 +307,13 @@ export default function SettingsPage() {
   const maskedKey = apiKeyLast4 ? `sk_live_****${apiKeyLast4}` : 'No API key yet';
 
   return (
-    <div className="space-y-6 max-w-2xl">
-      {/* Header */}
-      <div>
-        <h1 className="text-h1 font-bold text-on-surface">Settings</h1>
-        <p className="text-body-md text-on-surface-variant">Manage your account preferences</p>
-      </div>
+    <div className="flex items-center justify-center min-h-screen px-4 py-8">
+      <div className="space-y-6 max-w-2xl w-full">
+        {/* Header */}
+        <div className="text-center">
+          <h1 className="text-h1 font-bold text-on-surface">Settings</h1>
+          <p className="text-body-md text-on-surface-variant">Manage your account preferences</p>
+        </div>
 
       {/* Profile Settings */}
       <Card>
@@ -473,6 +474,7 @@ export default function SettingsPage() {
           },
         ]}
       />
+      </div>
     </div>
   );
 }
