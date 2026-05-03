@@ -3,7 +3,6 @@
 import { useSession, signOut } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
-import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 
 interface NavItem {
@@ -25,11 +24,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const router = useRouter();
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const activeNavItem = useMemo(() => {
+    return [...NAV_ITEMS]
+      .sort((firstItem, secondItem) => secondItem.href.length - firstItem.href.length)
+      .find((item) => pathname === item.href || pathname?.startsWith(`${item.href}/`));
+  }, [pathname]);
 
   const activeLabel = useMemo(() => {
-    const match = NAV_ITEMS.find((item) => pathname?.startsWith(item.href));
-    return match?.label || 'Dashboard';
-  }, [pathname]);
+    return activeNavItem?.label || 'Dashboard';
+  }, [activeNavItem]);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -58,17 +63,71 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="px-6 py-4 flex items-center justify-between">
           <button
             className="text-on-surface-variant hover:text-primary transition-colors"
-            onClick={() => setSidebarOpen((prev) => !prev)}
+            onClick={() => setMobileMenuOpen((prev) => !prev)}
             aria-label="Toggle menu"
           >
             <span className="material-symbols-outlined">menu</span>
           </button>
           <span className="text-xl font-black tracking-tight">LinkShrink</span>
-          <button className="text-on-surface-variant hover:text-primary transition-colors" aria-label="Account">
+          <button
+            className="text-on-surface-variant hover:text-primary transition-colors"
+            onClick={() => router.push('/dashboard/settings')}
+            aria-label="Account settings"
+          >
             <span className="material-symbols-outlined">account_circle</span>
           </button>
         </div>
       </header>
+
+      {mobileMenuOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)}>
+          <div
+            className="absolute left-4 right-4 top-20 rounded-2xl border border-outline-variant bg-surface-container-high p-4 shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="mb-4 flex items-center justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.25em] text-on-surface-variant">Menu</p>
+                <p className="text-lg font-semibold text-on-surface">{session.user?.name || session.user?.email}</p>
+              </div>
+              <button
+                className="text-on-surface-variant hover:text-primary transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="Close menu"
+              >
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
+            <div className="flex flex-col gap-2">
+              {NAV_ITEMS.map((item) => {
+                const isActive = activeNavItem?.href === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-colors ${
+                      isActive
+                        ? 'bg-primary/15 text-primary'
+                        : 'text-on-surface hover:bg-surface-container-highest'
+                    }`}
+                  >
+                    <span className="material-symbols-outlined">{item.icon}</span>
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+              <button
+                className="mt-2 flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-on-surface hover:bg-surface-container-highest transition-colors"
+                onClick={() => signOut({ redirect: true, callbackUrl: '/' })}
+              >
+                <span className="material-symbols-outlined">logout</span>
+                <span>Logout</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Sidebar */}
       <aside
@@ -82,7 +141,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </div>
         <div className="flex-1 flex flex-col gap-2">
           {NAV_ITEMS.map((item) => {
-            const isActive = pathname === item.href || pathname?.startsWith(`${item.href}/`);
+            const isActive = activeNavItem?.href === item.href;
             return (
               <Link
                 key={item.href}
@@ -124,31 +183,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </header>
         {children}
       </main>
-
-      {/* Mobile Bottom Nav */}
-      <nav className="lg:hidden glass-panel fixed bottom-0 left-0 right-0 z-40 border-t border-outline-variant px-6 py-3 flex items-center justify-around">
-        {NAV_ITEMS.map((item) => {
-          const isActive = pathname === item.href || pathname?.startsWith(`${item.href}/`);
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex flex-col items-center gap-1 text-xs uppercase tracking-widest ${
-                isActive ? 'text-primary' : 'text-on-surface-variant'
-              }`}
-            >
-              <span
-                className="material-symbols-outlined"
-                style={{ fontVariationSettings: isActive ? '"FILL" 1' : '"FILL" 0' }}
-              >
-                {item.icon}
-              </span>
-              {item.label}
-            </Link>
-          );
-        })}
-      </nav>
-      <div className="h-20 lg:hidden" />
     </div>
   );
 }

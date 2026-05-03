@@ -53,3 +53,5 @@ Thumbs.db
 
 # Archived development files (development references only, not needed for production)
 # These are preserved in _archive/ folder for historical reference
+
+.vercel
