@@ -194,7 +194,7 @@ export default function DashboardHome() {
           <Button
             variant="primary"
             size="lg"
-            className="uppercase tracking-widest text-xs md:self-end"
+            className="uppercase tracking-widest text-xs md:self-end md:min-w-44 shadow-2xl shadow-primary/40"
             onClick={handleShorten}
             isLoading={isCreating}
             disabled={!longUrl}
@@ -247,42 +247,54 @@ export default function DashboardHome() {
             {recentLinks.map((link) => (
               <Card key={link.id} className="hover:border-outline transition-colors">
                 <CardContent className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <div className="flex flex-col min-w-0">
-                        <span className="text-on-surface font-semibold truncate">
+                  <div className="flex-1 min-w-0 space-y-2">
+                    <div className="flex items-start justify-between gap-3 md:block">
+                      <div className="min-w-0">
+                        <span className="block text-on-surface font-semibold truncate text-lg md:text-base">
                           {link.nickname || link.title || 'Untitled link'}
                         </span>
-                        <Link
-                          href={buildShortUrl(link.short_code, typeof window !== 'undefined' ? window.location.origin : '')}
-                          className="text-surface-tint text-sm truncate"
-                          target="_blank"
-                        >
-                          {link.short_code}
-                        </Link>
+                        <div className="flex items-center gap-2 text-xs text-on-surface-variant mt-1">
+                          <span className="material-symbols-outlined text-sm">link</span>
+                          <span className="truncate text-xs sm:text-sm overflow-hidden whitespace-nowrap text-ellipsis">
+                            {link.original_url}
+                          </span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Button variant="outline" size="sm" onClick={() => handleCopy(link.short_code)}>
-                          <span className="material-symbols-outlined">content_copy</span>
-                        </Button>
-                        <Button variant="outline" size="sm" onClick={() => handleEditLink(link)} title="Edit link">
-                          <span className="material-symbols-outlined">edit</span>
-                        </Button>
-                        <Link href={`/dashboard/links/${link.id}`} className="text-on-surface-variant hover:text-primary">
-                          <span className="material-symbols-outlined">bar_chart</span>
-                        </Link>
+                      <div className="shrink-0 text-right md:hidden">
+                        <div className="text-secondary bg-surface-container px-3 py-2 rounded-full border border-outline-variant text-xs uppercase tracking-widest">
+                          {formatNumber(link.click_count)} clicks
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-on-surface-variant mt-2">
-                      <span className="material-symbols-outlined text-sm">link</span>
-                      <span className="truncate text-xs sm:text-sm overflow-hidden whitespace-nowrap text-ellipsis">{link.original_url}</span>
+
+                    <div className="flex flex-wrap items-center gap-2 text-xs text-on-surface-variant">
+                      <span className="hidden md:inline">Created {formatDate(link.created_at)}</span>
+                      <span className="md:hidden">{formatDate(link.created_at)}</span>
+                      <span className="hidden md:inline">•</span>
+                      <Link
+                        href={buildShortUrl(link.short_code, typeof window !== 'undefined' ? window.location.origin : '')}
+                        className="text-surface-tint truncate max-w-full"
+                        target="_blank"
+                      >
+                        {link.short_code}
+                      </Link>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 md:border-l md:border-outline-variant md:pl-6">
-                    <div className="text-secondary bg-surface-container px-3 py-2 rounded-full border border-outline-variant text-xs uppercase tracking-widest">
+
+                  <div className="flex flex-wrap items-center gap-2 md:justify-end md:border-l md:border-outline-variant md:pl-6">
+                    <div className="hidden md:block text-secondary bg-surface-container px-3 py-2 rounded-full border border-outline-variant text-xs uppercase tracking-widest">
                       {formatNumber(link.click_count)} clicks
                     </div>
-                    <span className="text-xs text-on-surface-variant">{formatDate(link.created_at)}</span>
+                    <Button variant="outline" size="sm" onClick={() => handleCopy(link.short_code)}>
+                      <span className="material-symbols-outlined">content_copy</span>
+                      <span className="hidden sm:inline">Copy</span>
+                    </Button>
+                    <Button variant="outline" size="sm" onClick={() => handleEditLink(link)} title="Edit link">
+                      <span className="material-symbols-outlined">edit</span>
+                    </Button>
+                    <Link href={`/dashboard/links/${link.id}`} className="text-on-surface-variant hover:text-primary">
+                      <span className="material-symbols-outlined">bar_chart</span>
+                    </Link>
                   </div>
                 </CardContent>
               </Card>

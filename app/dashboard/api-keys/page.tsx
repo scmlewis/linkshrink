@@ -117,10 +117,10 @@ export default function ApiKeysPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4 py-8">
+    <div className="flex flex-col lg:min-h-screen lg:items-center lg:justify-center px-4 py-6 lg:py-8">
       <div className="space-y-6 max-w-4xl w-full">
         {/* Header */}
-        <div className="flex flex-col items-center justify-center text-center">
+        <div className="flex flex-col items-center justify-center text-center lg:pt-0 pt-4">
           <div>
             <h1 className="text-h1 font-bold text-on-surface">API Keys</h1>
             <p className="text-body-md text-on-surface-variant">

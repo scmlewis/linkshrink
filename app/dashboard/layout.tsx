@@ -60,7 +60,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Mobile Top Bar */}
       <header className="lg:hidden sticky top-0 z-40 bg-black/80 backdrop-blur-xl border-b border-outline-variant">
-        <div className="px-6 py-4 flex items-center justify-between">
+        <div className="grid grid-cols-3 items-center px-6 py-4">
           <button
             className="text-on-surface-variant hover:text-primary transition-colors"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
@@ -68,14 +68,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           >
             <span className="material-symbols-outlined">menu</span>
           </button>
-          <span className="text-xl font-black tracking-tight">LinkShrink</span>
-          <button
-            className="text-on-surface-variant hover:text-primary transition-colors"
-            onClick={() => router.push('/dashboard/settings')}
-            aria-label="Account settings"
-          >
-            <span className="material-symbols-outlined">account_circle</span>
-          </button>
+          <span className="justify-self-center text-xl font-black tracking-tight">LinkShrink</span>
+          <span />
         </div>
       </header>
 

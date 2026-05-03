@@ -89,7 +89,7 @@ export default function LinksPage() {
         body: JSON.stringify({
           originalUrl: formData.originalUrl,
           customAlias: formData.customAlias || undefined,
-          title: formData.title,
+          nickname: formData.title,
           description: formData.description,
           tags,
         }),
@@ -185,7 +185,7 @@ export default function LinksPage() {
                 onChange={(e) => setFormData({ ...formData, customAlias: e.target.value })}
               />
               <Input
-                label="Title (optional)"
+                label="Nickname (optional)"
                 type="text"
                 placeholder="My awesome link"
                 value={formData.title}
@@ -265,10 +265,26 @@ export default function LinksPage() {
             {links.map((link) => (
               <Card key={link.id} className="hover:bg-surface-container-high transition-colors">
                 <CardContent className="py-4">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-2 flex-wrap">
-                        <p className="font-semibold text-on-surface">{link.title || 'Untitled'}</p>
+                  <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                    <div className="flex-1 min-w-0 space-y-2">
+                      <div className="flex items-start justify-between gap-3 md:block">
+                        <div className="min-w-0">
+                          <p className="font-semibold text-on-surface truncate text-lg md:text-base">
+                            {link.nickname || link.title || 'Untitled'}
+                          </p>
+                          <p className="text-xs text-on-surface-variant truncate mb-1">{link.original_url}</p>
+                        </div>
+                        <div className="md:hidden text-right shrink-0">
+                          <p className="font-bold text-secondary text-lg">{formatNumber(link.click_count)}</p>
+                          <p className="text-xs text-on-surface-variant">clicks</p>
+                        </div>
+                      </div>
+
+                      {link.description && (
+                        <p className="text-xs text-on-surface-variant line-clamp-2">{link.description}</p>
+                      )}
+
+                      <div className="flex flex-wrap items-center gap-2">
                         {link.tags && link.tags.length > 0 && (
                           <div className="flex gap-1 flex-wrap">
                             {link.tags.map((tag) => (
@@ -278,23 +294,19 @@ export default function LinksPage() {
                             ))}
                           </div>
                         )}
+                        <p className="text-xs text-on-surface-variant">
+                          Created {formatDate(link.created_at)}
+                          {link.last_clicked_at && ` • Last clicked ${formatDate(link.last_clicked_at)}`}
+                        </p>
                       </div>
-                      <p className="text-sm text-on-surface-variant truncate mb-1">{link.original_url}</p>
-                      {link.description && (
-                        <p className="text-xs text-on-surface-variant mb-1">{link.description}</p>
-                      )}
-                      <p className="text-xs text-on-surface-variant">
-                        Created {formatDate(link.created_at)}
-                        {link.last_clicked_at && ` • Last clicked ${formatDate(link.last_clicked_at)}`}
-                      </p>
                     </div>
 
-                    <div className="text-right whitespace-nowrap">
-                      <p className="font-bold text-secondary text-lg">{formatNumber(link.click_count)}</p>
-                      <p className="text-xs text-on-surface-variant">clicks</p>
-                    </div>
+                    <div className="flex flex-wrap items-center gap-2 md:justify-end md:border-l md:border-outline-variant md:pl-6">
+                      <div className="hidden md:block text-right whitespace-nowrap">
+                        <p className="font-bold text-secondary text-lg">{formatNumber(link.click_count)}</p>
+                        <p className="text-xs text-on-surface-variant">clicks</p>
+                      </div>
 
-                    <div className="flex gap-2">
                       <Button
                         size="sm"
                         variant="outline"
@@ -302,7 +314,7 @@ export default function LinksPage() {
                         title="Copy short URL"
                       >
                         <span className="material-symbols-outlined">content_copy</span>
-                        {copiedId === link.short_code ? 'Copied' : 'Copy'}
+                        <span className="hidden sm:inline">{copiedId === link.short_code ? 'Copied' : 'Copy'}</span>
                       </Button>
                       <Button
                         size="sm"
