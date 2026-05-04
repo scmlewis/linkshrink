@@ -99,7 +99,10 @@ export const authOptions: NextAuthConfig = {
     error: '/auth/error',
   },
 
-  secret: process.env.NEXTAUTH_SECRET,
+  secret:
+    process.env.NEXTAUTH_SECRET ||
+    process.env.AUTH_SECRET ||
+    (process.env.NODE_ENV === 'development' ? 'linkshrink-dev-secret' : undefined),
 };
 
 export const { handlers, auth } = NextAuth(authOptions);

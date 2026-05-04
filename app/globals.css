@@ -10,12 +10,28 @@
 
 body {
   font-family: var(--font-inter), sans-serif;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(183, 109, 255, 0.18), transparent 30%),
+    radial-gradient(circle at 80% 10%, rgba(76, 215, 246, 0.12), transparent 26%),
+    linear-gradient(180deg, #09070d 0%, #120d17 46%, #0a0810 100%);
+  background-attachment: fixed;
+  color: #eadfed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: rgba(221, 183, 255, 0.28);
+  color: #ffffff;
 }
 
 .glass-panel {
-  background: rgba(18, 18, 18, 0.8);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: linear-gradient(180deg, rgba(34, 28, 40, 0.82), rgba(18, 14, 23, 0.88));
+  border: 1px solid rgba(151, 141, 159, 0.22);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
 }
 
 .page-gradient {

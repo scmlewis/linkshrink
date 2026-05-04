@@ -9,6 +9,7 @@ const config: Config = {
     extend: {
       colors: {
         'surface-container-highest': '#39323d',
+        'surface-container': '#221c28',
         'tertiary-fixed-dim': '#fabc4e',
         'primary-fixed': '#f0dbff',
         'on-primary-fixed': '#2c0051',
@@ -28,6 +29,7 @@ const config: Config = {
         'secondary-fixed': '#acedff',
         'tertiary-container': '#bd871a',
         'surface-container-high': '#2e2832',
+        'outline-variant': '#675c70',
         'on-tertiary-fixed-variant': '#604100',
         'surface-variant': '#39323d',
         'primary': '#ddb7ff',

@@ -57,17 +57,17 @@ export const Modal: React.FC<ModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/70 backdrop-blur-md"
         onClick={() => closeOnBackdropClick && onClose()}
       />
 
       {/* Modal */}
-      <div className={`relative bg-surface border border-outline-variant rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto ${sizeClasses[size]}`}>
+      <div className={`relative glass-panel border border-outline-variant rounded-2xl shadow-2xl max-h-[90vh] overflow-y-auto ${sizeClasses[size]}`}>
         {/* Header */}
         {(title || description) && (
-          <div className="border-b border-outline-variant px-6 py-4">
-            {title && <h2 className="text-h2 font-bold text-on-surface">{title}</h2>}
-            {description && <p className="text-on-surface-variant text-sm mt-1">{description}</p>}
+          <div className="border-b border-outline-variant/60 px-6 py-4 bg-black/20">
+            {title && <h2 className="text-h2 font-bold text-on-surface tracking-tight">{title}</h2>}
+            {description && <p className="text-on-surface-variant text-sm mt-1 leading-relaxed">{description}</p>}
           </div>
         )}
 
@@ -76,7 +76,7 @@ export const Modal: React.FC<ModalProps> = ({
 
         {/* Footer */}
         {actions.length > 0 && (
-          <div className="border-t border-outline-variant px-6 py-4 flex gap-3 justify-end">
+          <div className="border-t border-outline-variant/60 px-6 py-4 flex gap-3 justify-end bg-black/15">
             {actions.map((action, index) => (
               <Button
                 key={index}

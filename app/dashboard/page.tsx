@@ -9,6 +9,12 @@ import { Modal } from '@/components/ui/Modal';
 import { buildShortUrl, copyToClipboard, formatNumber, formatDate } from '@/lib/utils';
 import { AnalyticsSummary, Link as LinkType } from '@/lib/types';
 
+const summaryLabels = [
+  { key: 'total_clicks', label: 'Total clicks', icon: 'ads_click' },
+  { key: 'clicks_today', label: 'Clicks today', icon: 'today' },
+  { key: 'top_country', label: 'Top country', icon: 'public' },
+] as const;
+
 export default function DashboardHome() {
   const { data: session } = useSession();
   const [summary, setSummary] = useState<AnalyticsSummary | null>(null);
@@ -138,70 +144,86 @@ export default function DashboardHome() {
   const displayName = session?.user?.name || session?.user?.email?.split('@')[0] || 'there';
 
   if (isLoading) {
-    return <div className="text-center py-12 text-on-surface-variant">Loading...</div>;
+    return <div className="text-center py-12 text-on-surface-variant">Loading your dashboard...</div>;
   }
 
   return (
     <div className="space-y-10">
-      <section className="glass-panel border border-outline rounded-2xl p-8 text-center relative overflow-hidden hover:border-outline-variant transition-all duration-200">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/15 via-transparent to-secondary/10 pointer-events-none" />
-        <div className="relative z-10 flex flex-col gap-4">
+      <section className="glass-panel border border-outline-variant rounded-3xl p-8 md:p-10 text-center relative overflow-hidden hover:border-outline transition-all duration-200">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/18 via-transparent to-secondary/12 pointer-events-none" />
+        <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-primary/10 blur-3xl pointer-events-none" />
+        <div className="relative z-10 flex flex-col gap-5">
           <div className="inline-flex items-center justify-center gap-2 text-xs uppercase tracking-[0.3em] text-on-surface-variant">
             <span className="h-2 w-2 rounded-full bg-secondary animate-pulse" />
             Welcome back, {displayName}
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-on-surface leading-tight">
+          <h1 className="text-4xl md:text-5xl font-bold text-on-surface leading-tight tracking-tight">
             Shorten. Share. <span className="text-primary">Track.</span>
           </h1>
           <p className="text-lg text-on-surface-variant leading-relaxed max-w-2xl mx-auto">
             Create compact, reliable links in seconds and monitor their performance in real-time.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-3 py-2">
-            <span className="px-4 py-2 text-xs uppercase tracking-widest rounded-full border border-outline-variant text-on-surface-variant hover:border-outline transition-colors">
-              {formatNumber(summary?.total_clicks || 0)} total clicks
-            </span>
-            <span className="px-4 py-2 text-xs uppercase tracking-widest rounded-full border border-outline-variant text-on-surface-variant hover:border-outline transition-colors">
-              {formatNumber(summary?.clicks_today || 0)} clicks today
-            </span>
-            <span className="px-4 py-2 text-xs uppercase tracking-widest rounded-full border border-outline-variant text-on-surface-variant hover:border-outline transition-colors">
-              Top country: {summary?.top_country || 'N/A'}
-            </span>
+          <div className="grid gap-3 sm:grid-cols-3 py-2">
+            {summaryLabels.map((item) => (
+              <div key={item.label} className="rounded-2xl border border-outline-variant bg-black/20 px-4 py-4 text-left shadow-lg shadow-black/10">
+                <div className="flex items-center justify-between gap-3 mb-3">
+                  <span className="text-xs uppercase tracking-[0.25em] text-on-surface-variant">{item.label}</span>
+                  <span className="material-symbols-outlined text-secondary text-sm">{item.icon}</span>
+                </div>
+                <div className="text-lg font-semibold text-on-surface tracking-tight">
+                  {item.key === 'top_country'
+                    ? summary?.top_country || 'N/A'
+                    : formatNumber(summary?.[item.key] || 0)}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-        <div className="relative z-10 mt-8 flex flex-col gap-4 md:flex-row">
-          <div className="flex-1 flex flex-col gap-4">
-            <div className="text-left">
-              <label className="text-label-caps uppercase text-on-surface-variant mb-2 block text-xs">Destination URL</label>
-              <input
-                className="w-full bg-black/80 border-2 border-outline-variant rounded-lg px-4 py-3 text-on-surface placeholder-on-surface-variant focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-outline transition-all duration-200"
-                placeholder="Paste your long link here..."
-                value={longUrl}
-                onChange={(event) => setLongUrl(event.target.value)}
-                type="url"
-              />
+        <div className="relative z-10 mt-8 rounded-3xl border border-outline-variant bg-black/20 p-4 md:p-5 text-left">
+          <div className="flex items-center justify-between gap-4 mb-5">
+            <div>
+              <p className="text-xs uppercase tracking-[0.25em] text-on-surface-variant">Create link</p>
+              <h2 className="text-h2 font-semibold text-on-surface tracking-tight">One small form, clearer output</h2>
             </div>
-            <div className="text-left">
-              <label className="text-label-caps uppercase text-on-surface-variant mb-2 block text-xs">Nickname (optional)</label>
-              <input
-                className="w-full bg-black/80 border-2 border-outline-variant rounded-lg px-4 py-3 text-on-surface placeholder-on-surface-variant focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-outline transition-all duration-200"
-                placeholder="Give your link a memorable name..."
-                value={nickname}
-                onChange={(event) => setNickname(event.target.value)}
-                type="text"
-              />
-            </div>
+            <span className="hidden md:inline-flex rounded-full border border-outline-variant px-3 py-1 text-xs uppercase tracking-[0.25em] text-secondary">
+              Instant creation
+            </span>
           </div>
-          <Button
-            variant="primary"
-            size="lg"
-            className="uppercase tracking-widest text-xs md:self-end md:min-w-44 shadow-2xl shadow-primary/40"
-            onClick={handleShorten}
-            isLoading={isCreating}
-            disabled={!longUrl}
-          >
-            Shorten
-            <span className="material-symbols-outlined">arrow_forward</span>
-          </Button>
+          <div className="flex flex-col gap-4 md:flex-row md:items-end">
+            <div className="flex-1 flex flex-col gap-4">
+              <div>
+                <label className="text-label-caps uppercase text-on-surface-variant mb-2 block text-xs">Destination URL</label>
+                <input
+                  className="w-full bg-black/80 border-2 border-outline-variant rounded-xl px-4 py-3 text-on-surface placeholder-on-surface-variant focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-outline transition-all duration-200"
+                  placeholder="Paste your long link here..."
+                  value={longUrl}
+                  onChange={(event) => setLongUrl(event.target.value)}
+                  type="url"
+                />
+              </div>
+              <div>
+                <label className="text-label-caps uppercase text-on-surface-variant mb-2 block text-xs">Nickname (optional)</label>
+                <input
+                  className="w-full bg-black/80 border-2 border-outline-variant rounded-xl px-4 py-3 text-on-surface placeholder-on-surface-variant focus:border-primary focus:ring-2 focus:ring-primary/20 hover:border-outline transition-all duration-200"
+                  placeholder="Give your link a memorable name..."
+                  value={nickname}
+                  onChange={(event) => setNickname(event.target.value)}
+                  type="text"
+                />
+              </div>
+            </div>
+            <Button
+              variant="primary"
+              size="lg"
+              className="uppercase tracking-widest text-xs md:min-w-48 shadow-2xl shadow-primary/30"
+              onClick={handleShorten}
+              isLoading={isCreating}
+              disabled={!longUrl}
+            >
+              Shorten
+              <span className="material-symbols-outlined">arrow_forward</span>
+            </Button>
+          </div>
         </div>
         {createError && <p className="text-error text-sm mt-3">{createError}</p>}
       </section>
@@ -234,7 +256,10 @@ export default function DashboardHome() {
 
       <section className="space-y-4">
         <div className="flex items-center justify-between border-b border-outline-variant pb-2">
-          <h2 className="text-h2 font-semibold text-on-surface">Recent Links</h2>
+          <div>
+            <p className="text-xs uppercase tracking-[0.25em] text-on-surface-variant mb-1">Workspace</p>
+            <h2 className="text-h2 font-semibold text-on-surface tracking-tight">Recent Links</h2>
+          </div>
           <Link
             href="/dashboard/links"
             className="text-primary text-xs uppercase tracking-widest flex items-center gap-1"
@@ -302,8 +327,12 @@ export default function DashboardHome() {
           </div>
         ) : (
           <Card>
-            <CardContent className="py-8 text-center text-on-surface-variant">
-              No links created yet.
+            <CardContent className="py-10 text-center text-on-surface-variant space-y-3">
+              <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary mx-auto">
+                <span className="material-symbols-outlined">link_off</span>
+              </div>
+              <p className="text-lg text-on-surface">No links created yet.</p>
+              <p className="max-w-sm mx-auto leading-relaxed">Your first shortened link will appear here with copy, edit, and analytics actions.</p>
             </CardContent>
           </Card>
         )}
@@ -327,7 +356,7 @@ export default function DashboardHome() {
               placeholder="Give your link a memorable name..."
               value={editNickname}
               onChange={(e) => setEditNickname(e.target.value)}
-              className="w-full px-4 py-2 bg-black/80 border border-outline-variant rounded-lg text-on-surface placeholder-on-surface-variant focus:outline-none focus:border-primary"
+                className="w-full px-4 py-2.5 bg-black/80 border border-outline-variant rounded-xl text-on-surface placeholder-on-surface-variant focus:outline-none focus:border-primary"
             />
           </div>
           <div className="flex gap-2 justify-end">

@@ -10,7 +10,9 @@ export const Card: React.FC<CardProps> = ({ children, className = '', onClick })
   return (
     <div
       className={`glass-panel border border-outline-variant rounded-xl p-6 shadow-lg shadow-black/30 transition-all duration-200 ${
-        onClick ? 'cursor-pointer hover:border-outline hover:shadow-lg hover:shadow-primary/20 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary' : ''
+        onClick
+          ? 'cursor-pointer hover:border-outline hover:shadow-xl hover:shadow-primary/15 hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary'
+          : ''
       } ${className}`}
       onClick={onClick}
       role={onClick ? 'button' : undefined}
@@ -37,7 +39,7 @@ interface CardTitleProps {
 }
 
 export const CardTitle: React.FC<CardTitleProps> = ({ children, className = '' }) => {
-  return <h3 className={`text-h2 font-bold text-on-surface ${className}`}>{children}</h3>;
+  return <h3 className={`text-h2 font-bold text-on-surface tracking-tight ${className}`}>{children}</h3>;
 };
 
 interface CardDescriptionProps {
@@ -46,7 +48,7 @@ interface CardDescriptionProps {
 }
 
 export const CardDescription: React.FC<CardDescriptionProps> = ({ children, className = '' }) => {
-  return <p className={`text-body-md text-on-surface-variant ${className}`}>{children}</p>;
+  return <p className={`text-body-md text-on-surface-variant leading-relaxed ${className}`}>{children}</p>;
 };
 
 interface CardContentProps {

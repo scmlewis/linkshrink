@@ -44,7 +44,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (status === 'loading') {
     return (
-      <div className="min-h-screen bg-surface flex items-center justify-center">
+      <div className="min-h-screen page-gradient flex items-center justify-center">
         <div className="animate-pulse text-h2 text-primary">Loading...</div>
       </div>
     );
@@ -55,11 +55,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   }
 
   return (
-    <div className="min-h-screen bg-surface text-on-surface flex flex-col lg:flex-row relative overflow-x-hidden">
+    <div className="min-h-screen page-gradient text-on-surface flex flex-col lg:flex-row relative overflow-x-hidden">
       <div className="bg-glow" />
 
       {/* Mobile Top Bar */}
-      <header className="lg:hidden sticky top-0 z-40 bg-black/80 backdrop-blur-xl border-b border-outline-variant">
+      <header className="lg:hidden sticky top-0 z-40 glass-panel border-b border-outline-variant/60">
         <div className="grid grid-cols-3 items-center px-6 py-4">
           <button
             className="text-on-surface-variant hover:text-primary transition-colors"
@@ -125,12 +125,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Sidebar */}
       <aside
-        className={`hidden lg:flex flex-col fixed left-0 top-0 h-full py-8 bg-[#121212] border-r border-outline-variant transition-all duration-300 z-30 ${
+        className={`hidden lg:flex flex-col fixed left-0 top-0 h-full py-8 glass-panel border-r border-outline-variant/60 transition-all duration-300 z-30 ${
           sidebarOpen ? 'w-64' : 'w-20'
         }`}
       >
-        <div className="px-6 mb-10 flex flex-col gap-1">
-          <span className="text-lg font-black text-primary">LinkShrink</span>
+        <div className="px-6 mb-10 flex flex-col gap-2">
+          <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/15 text-primary">
+            <span className="material-symbols-outlined">link</span>
+          </span>
+          <span className="text-lg font-black text-primary tracking-tight">LinkShrink</span>
+          {sidebarOpen && <p className="text-xs uppercase tracking-[0.25em] text-on-surface-variant">Workspace</p>}
         </div>
         <div className="flex-1 flex flex-col gap-2">
           {NAV_ITEMS.map((item) => {
@@ -141,7 +145,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 href={item.href}
                 className={`flex items-center gap-3 px-4 py-3 text-xs uppercase tracking-[0.2em] transition-all ${
                   isActive
-                    ? 'bg-surface-container-high text-primary border-r-4 border-primary'
+                    ? 'bg-primary/12 text-primary border-r-4 border-primary shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]'
                     : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high'
                 } ${sidebarOpen ? '' : 'justify-center'}`}
               >
@@ -172,7 +176,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       {/* Main Content */}
       <main className="flex-1 lg:ml-64 px-6 py-8 lg:px-10 lg:py-10 relative z-10">
         <header className="hidden lg:flex items-center justify-between mb-8">
-          <h2 className="text-h2 font-semibold text-on-surface">{activeLabel}</h2>
+          <div>
+            <p className="text-xs uppercase tracking-[0.25em] text-on-surface-variant mb-2">Current section</p>
+            <h2 className="text-h2 font-semibold text-on-surface tracking-tight">{activeLabel}</h2>
+          </div>
+          <div className="text-right text-sm text-on-surface-variant">
+            <p>{session.user?.name || session.user?.email}</p>
+          </div>
         </header>
         {children}
       </main>
