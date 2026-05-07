@@ -35,6 +35,11 @@ jobs:
       
       - name: Install dependencies
         run: npm ci
+      - name: Rebuild native optional deps (workaround for lightningcss)
+        run: |
+          npm rebuild || true
+          npm rebuild lightningcss || true
+          npm cache verify || true
       
       - name: Run linter
         run: npm run lint
