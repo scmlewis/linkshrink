@@ -2,7 +2,6 @@ import React from 'react';
 import { Input } from './Input';
 import { Textarea } from './Textarea';
 import { Select, SelectOption } from './Select';
-import { ValidationRule } from '@/lib/validation';
 
 interface FormInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -10,12 +9,10 @@ interface FormInputProps
   helperText?: string;
   error?: string;
   touched?: boolean;
-  rules?: ValidationRule[];
-  onValidate?: (error?: string) => void;
 }
 
 export const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
-  ({ error, touched, rules, onValidate, ...props }, ref) => {
+  ({ error, touched, ...props }, ref) => {
     const showError = touched && error;
 
     return (
@@ -36,14 +33,12 @@ interface FormTextareaProps
   helperText?: string;
   error?: string;
   touched?: boolean;
-  rules?: ValidationRule[];
-  onValidate?: (error?: string) => void;
 }
 
 export const FormTextarea = React.forwardRef<
   HTMLTextAreaElement,
   FormTextareaProps
->(({ error, touched, rules, onValidate, ...props }, ref) => {
+>(({ error, touched, ...props }, ref) => {
   const showError = touched && error;
 
   return (
@@ -65,12 +60,10 @@ interface FormSelectProps
   touched?: boolean;
   options: SelectOption[];
   placeholder?: string;
-  rules?: ValidationRule[];
-  onValidate?: (error?: string) => void;
 }
 
 export const FormSelect = React.forwardRef<HTMLSelectElement, FormSelectProps>(
-  ({ error, touched, rules, onValidate, ...props }, ref) => {
+  ({ error, touched, ...props }, ref) => {
     const showError = touched && error;
 
     return (

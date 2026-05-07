@@ -13,6 +13,7 @@ export default function SettingsPage() {
   const [apiKeyVisible, setApiKeyVisible] = useState(false);
   const [isLoadingProfile, setIsLoadingProfile] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoadingKey, setIsLoadingKey] = useState(true);
   const [isRotatingKey, setIsRotatingKey] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [email, setEmail] = useState('');
@@ -137,7 +138,7 @@ export default function SettingsPage() {
             setApiKeyLast4(data.keys[0].last4 || '');
           }
         }
-      } catch (loadError) {
+      } catch {
         if (isActive) {
           setApiKeyError('Failed to load API key');
         }
