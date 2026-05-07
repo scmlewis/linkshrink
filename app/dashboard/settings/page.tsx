@@ -13,7 +13,7 @@ export default function SettingsPage() {
   const [apiKeyVisible, setApiKeyVisible] = useState(false);
   const [isLoadingProfile, setIsLoadingProfile] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [isLoadingKey, setIsLoadingKey] = useState(true);
+  const [, setIsLoadingKey] = useState(true);
   const [isRotatingKey, setIsRotatingKey] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [email, setEmail] = useState('');

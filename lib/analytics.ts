@@ -1,4 +1,4 @@
-import { supabase, supabaseAdmin } from './supabase';
+import { supabaseAdmin } from './supabase';
 import { AnalyticsRecord, AnalyticsSummary, LinkAnalytics, ApiResponse } from './types';
 import { parseUserAgent } from './utils';
 
@@ -31,13 +31,13 @@ export async function recordClick(
             signal: controller.signal,
           });
           clearTimeout(timeoutId);
-          
+
           if (geoResponse.ok) {
             const geoData = await geoResponse.json();
             country = geoData.country_name || 'Unknown';
             city = geoData.city || 'Unknown';
           }
-        } catch (fetchError) {
+        } catch {
           clearTimeout(timeoutId);
           // Silently fail geo lookup - not critical for recording click
         }
@@ -155,14 +155,7 @@ export async function getLinkAnalytics(linkId: string): Promise<ApiResponse<Link
       operatingSystems[os] = (operatingSystems[os] || 0) + 1;
     });
 
-    // Convert to array format
-    const formatAggregates = (obj: Record<string, number>) =>
-      Object.entries(obj)
-        .map(([key, value]) => ({
-          [Object.keys(obj).length > 0 ? Object.keys(obj)[0].split(' ')[0].toLowerCase() : 'name']: key,
-          clicks: value,
-        }))
-        .sort((a, b) => b.clicks - a.clicks);
+    // Convert to array format (inline below where used)
 
     return {
       success: true,

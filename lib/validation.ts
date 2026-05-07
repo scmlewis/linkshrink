@@ -63,9 +63,9 @@ export const validators = {
     message: 'Password must be at least 8 characters with uppercase and numbers',
   }),
 
-  match: (fieldValue: string, fieldName: string): ValidationRule => ({
+  match: (fieldValue: string, fieldName: string = 'Field'): ValidationRule => ({
     validate: (value) => value === fieldValue,
-    message: `Passwords do not match`,
+    message: `${fieldName} does not match`,
   }),
 
   pattern: (pattern: RegExp, message: string): ValidationRule => ({

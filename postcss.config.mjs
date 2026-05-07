@@ -17,7 +17,6 @@ if (!isTest) {
       '@tailwindcss/postcss': {},
     };
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.warn(
       'Warning: failed to load @tailwindcss/postcss. Continuing without Tailwind PostCSS plugin.',
       err?.message || err,
