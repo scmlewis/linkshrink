@@ -55,7 +55,7 @@ export default function SettingsPage() {
           setEmail(data.email || '');
           setFullName(data.name || '');
         }
-      } catch (_loadError) {
+      } catch {
         if (isActive) {
           setError('Failed to load profile');
         }
@@ -95,7 +95,7 @@ export default function SettingsPage() {
           setEmailNotifications(Boolean(data.email_notifications));
           setProductUpdates(Boolean(data.product_updates));
         }
-      } catch (_prefLoadError) {
+      } catch {
         if (isActive) {
           setPrefError('Failed to load preferences');
         }
@@ -176,7 +176,7 @@ export default function SettingsPage() {
       const data = await res.json();
       setFullName(data.name || '');
       setSuccessMessage('Profile updated');
-    } catch (_saveError) {
+    } catch {
       setError('Failed to update profile');
     } finally {
       setIsSaving(false);
@@ -217,7 +217,7 @@ export default function SettingsPage() {
       setApiKeyLast4(data.last4 || '');
       setApiKeyVisible(true);
       setApiKeyMessage('New API key generated');
-    } catch (_rotateError) {
+    } catch {
       setApiKeyError('Failed to create API key');
     } finally {
       setIsRotatingKey(false);
@@ -246,7 +246,7 @@ export default function SettingsPage() {
       anchor.click();
       anchor.remove();
       URL.revokeObjectURL(url);
-    } catch (_exportError) {
+    } catch {
       setApiKeyError('Failed to export data');
     } finally {
       setIsExporting(false);
@@ -266,7 +266,7 @@ export default function SettingsPage() {
       }
 
       await signOut({ callbackUrl: '/' });
-    } catch (_deleteAccountError) {
+    } catch {
       setDeleteError('Failed to delete account');
     } finally {
       setIsDeletingAccount(false);
@@ -296,7 +296,7 @@ export default function SettingsPage() {
       }
 
       setPrefMessage('Preferences saved');
-    } catch (_prefSaveError) {
+    } catch {
       setPrefError('Failed to save preferences');
     } finally {
       setIsSavingPreferences(false);

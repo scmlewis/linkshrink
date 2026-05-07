@@ -93,7 +93,7 @@ export default function DashboardHome() {
         const linksData = await linksRes.json();
         setRecentLinks(linksData.links);
       }
-    } catch (_error) {
+    } catch {
       setCreateError('Failed to create link');
     } finally {
       setIsCreating(false);
