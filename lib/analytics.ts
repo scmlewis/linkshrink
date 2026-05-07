@@ -17,14 +17,34 @@ export async function recordClick(
     const { device_type, os, browser } = parseUserAgent(request.user_agent || '');
 
     // Try to get geo data (optional)
-    const country = 'Unknown';
-    const city = 'Unknown';
+    let country = 'Unknown';
+    let city = 'Unknown';
 
     try {
-      // Using ip-api or similar service would go here
-      // For now, we'll leave it as unknown
+      // Using ipapi.co for geolocation (no key required)
+      if (request.ip_address) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
+        
+        try {
+          const geoResponse = await fetch(`https://ipapi.co/${request.ip_address}/json/`, {
+            signal: controller.signal,
+          });
+          clearTimeout(timeoutId);
+          
+          if (geoResponse.ok) {
+            const geoData = await geoResponse.json();
+            country = geoData.country_name || 'Unknown';
+            city = geoData.city || 'Unknown';
+          }
+        } catch (fetchError) {
+          clearTimeout(timeoutId);
+          // Silently fail geo lookup - not critical for recording click
+        }
+      }
     } catch (e) {
-      // Silently fail geo lookup
+      // Silently fail geo lookup - not critical for recording click
+      console.debug('Geo lookup failed:', e);
     }
 
     const { data: record, error } = await supabaseAdmin

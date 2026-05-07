@@ -1,0 +1,278 @@
+{
+  "communities": {
+    "0": [
+      "analytics",
+      "api_keys",
+      "api_layer",
+      "archive_index",
+      "auth_system",
+      "component_lib",
+      "custom_aliases",
+      "dark_mode",
+      "dashboard",
+      "deploy_vercel",
+      "github",
+      "github_actions",
+      "housekeeping",
+      "link_management",
+      "linkshrink",
+      "nextauth",
+      "oauth",
+      "proj_summary",
+      "qr_codes",
+      "quick_start",
+      "readme",
+      "responsive",
+      "tag_org",
+      "tailwind",
+      "testing_lib",
+      "url_shortening",
+      "vercel",
+      "zod"
+    ],
+    "1": [
+      "fn_createlink",
+      "fn_deletelink",
+      "fn_getlink",
+      "fn_getlinkbyshortcode",
+      "fn_getuserlinks",
+      "fn_incrementclick",
+      "fn_recordclick",
+      "fn_updatelink",
+      "layout_dashboard",
+      "lib_analytics",
+      "lib_auth",
+      "lib_links",
+      "lib_supabase",
+      "page_api_keys",
+      "page_dashboard_home",
+      "page_link_detail",
+      "page_links",
+      "page_settings",
+      "pkg_papaparse",
+      "pkg_qrcode",
+      "route_auth",
+      "route_export",
+      "route_link_detail",
+      "route_links",
+      "route_preferences",
+      "route_qr",
+      "route_redirect",
+      "route_user"
+    ],
+    "2": [
+      "account-route",
+      "analytics-route",
+      "analytics-table",
+      "api-keys-route",
+      "api-keys-table",
+      "docker",
+      "docker_compose",
+      "dockerfile",
+      "links-table",
+      "next-auth",
+      "postgresql",
+      "providers-tsx",
+      "rls",
+      "session-provider",
+      "signup-route",
+      "supabase",
+      "tags-table",
+      "toast-provider",
+      "users-table"
+    ],
+    "3": [
+      "error-tsx",
+      "eslint-config",
+      "layout-tsx",
+      "next-config",
+      "next-env-types",
+      "next-js",
+      "nextjs",
+      "page-tsx",
+      "postcss",
+      "postcss-config",
+      "react",
+      "tailwind-config",
+      "tailwind-css",
+      "typescript",
+      "vitest",
+      "vitest-config"
+    ],
+    "4": [
+      "badge_component",
+      "button_component",
+      "card_component",
+      "checkbox_component",
+      "divider_component",
+      "error_boundary_component",
+      "error_page_component",
+      "form_field_component",
+      "input_component",
+      "modal_component",
+      "select_component",
+      "skeleton_component",
+      "spinner_component",
+      "textarea_component",
+      "toast_component",
+      "ui_index"
+    ],
+    "5": [
+      "db_analytics_table",
+      "db_api_keys_table",
+      "db_links_table",
+      "db_preferences_table",
+      "db_schema",
+      "db_tags_table",
+      "db_users_table",
+      "db_verification",
+      "deployment_local",
+      "test_account_route",
+      "test_api_keys_route",
+      "test_export_route",
+      "test_preferences_route",
+      "test_user_route"
+    ],
+    "6": [
+      "lib_useForm",
+      "lib_validation",
+      "test_useForm",
+      "test_validation",
+      "validators_email",
+      "validators_maxLength",
+      "validators_minLength",
+      "validators_password",
+      "validators_required",
+      "validators_url"
+    ],
+    "7": [
+      "deployment_vercel",
+      "lib_utils",
+      "test_buildShortUrl",
+      "test_utils",
+      "utils_buildShortUrl",
+      "utils_copyToClipboard",
+      "utils_formatDate",
+      "utils_formatNumber",
+      "utils_parseUserAgent"
+    ],
+    "8": [
+      "analytics_module",
+      "auth_module",
+      "links_module",
+      "shortener_module",
+      "supabase_module",
+      "types_module",
+      "use_form_hook",
+      "utils_module",
+      "validation_module"
+    ],
+    "9": [
+      "component_button",
+      "lib_useform",
+      "page_analytics",
+      "page_auth_error",
+      "page_signin",
+      "page_signup",
+      "pkg_nextauth"
+    ],
+    "10": [
+      "aws",
+      "cloudflare",
+      "digitalocean",
+      "hosting_analysis",
+      "railway"
+    ],
+    "11": [
+      "papaparse",
+      "papaparse-types"
+    ],
+    "12": [
+      "qrcode-lib",
+      "qrcode-types"
+    ],
+    "13": [
+      "eslint"
+    ],
+    "14": [
+      "not-found-tsx"
+    ],
+    "15": [
+      "component_badge"
+    ],
+    "16": [
+      "agents_config"
+    ],
+    "17": [
+      "agents_doc"
+    ],
+    "18": [
+      "archive_deployment"
+    ],
+    "19": [
+      "archive_proj_summary"
+    ],
+    "20": [
+      "dev_tools_readme"
+    ]
+  },
+  "cohesion": {},
+  "god_nodes": [],
+  "surprises": [
+    {
+      "source": "API Keys API Route",
+      "target": "TypeScript",
+      "source_files": [
+        "",
+        ""
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "uses_crypto_from",
+      "note": "Bridges community 3 \u2192 community 2"
+    },
+    {
+      "source": "LinkShrink",
+      "target": "TypeScript",
+      "source_files": [
+        "",
+        ""
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "uses",
+      "note": "Bridges community 3 \u2192 community 0"
+    },
+    {
+      "source": "LinkShrink",
+      "target": "Supabase",
+      "source_files": [
+        "",
+        ""
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "uses for database",
+      "note": "Bridges community 2 \u2192 community 0"
+    },
+    {
+      "source": "Dashboard Home",
+      "target": "Button Component",
+      "source_files": [
+        "",
+        ""
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "renders",
+      "note": "Bridges community 1 \u2192 community 9"
+    },
+    {
+      "source": "Dashboard Home",
+      "target": "Utilities Library",
+      "source_files": [
+        "",
+        ""
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "uses utility functions",
+      "note": "Bridges community 1 \u2192 community 7"
+    }
+  ]
+}

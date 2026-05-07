@@ -50,22 +50,24 @@ export default function AnalyticsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-h1 font-bold text-on-surface">Analytics</h1>
-          <p className="text-body-md text-on-surface-variant">Track clicks and engagement across your links</p>
+      <div className="sticky top-0 z-20 bg-gradient-to-b from-surface-container to-transparent pb-4 mb-6 -mx-6 px-6 lg:-mx-10 lg:px-10 py-4 lg:py-0">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-h1 font-bold text-on-surface">Analytics</h1>
+            <p className="text-body-md text-on-surface-variant">Track clicks and engagement across your links</p>
+          </div>
+          <Select
+            options={[
+              { value: '7days', label: 'Last 7 Days' },
+              { value: '30days', label: 'Last 30 Days' },
+              { value: '90days', label: 'Last 90 Days' },
+              { value: 'all', label: 'All Time' },
+            ]}
+            value={dateRange}
+            onChange={(e) => setDateRange(e.currentTarget.value)}
+            className="w-full sm:w-auto min-w-40 py-2 text-sm"
+          />
         </div>
-        <Select
-          options={[
-            { value: '7days', label: 'Last 7 Days' },
-            { value: '30days', label: 'Last 30 Days' },
-            { value: '90days', label: 'Last 90 Days' },
-            { value: 'all', label: 'All Time' },
-          ]}
-          value={dateRange}
-          onChange={(e) => setDateRange(e.currentTarget.value)}
-          className="w-auto min-w-40 py-2 text-sm"
-        />
       </div>
 
       {/* Overview Cards */}
@@ -102,13 +104,13 @@ export default function AnalyticsPage() {
           <Card>
             <CardContent className="pt-6">
               <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-3xl font-bold text-tertiary mb-1">
+                <div className="min-w-0 flex-1">
+                  <div className="text-3xl font-bold text-tertiary mb-1 truncate" title={summary?.top_referrer || 'Direct'}>
                     {summary?.top_referrer || 'Direct'}
                   </div>
                   <div className="text-sm text-on-surface-variant">Top Referrer</div>
                 </div>
-                <span className="material-symbols-outlined text-tertiary text-3xl opacity-30">public</span>
+                <span className="material-symbols-outlined text-tertiary text-3xl opacity-30 flex-shrink-0 ml-2">public</span>
               </div>
             </CardContent>
           </Card>

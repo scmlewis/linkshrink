@@ -148,7 +148,7 @@ export default function LinksPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="sticky top-0 z-20 bg-gradient-to-b from-surface-container to-transparent pb-4 -mx-6 px-6 lg:-mx-10 lg:px-10 py-4 lg:py-0 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-h1 font-bold text-on-surface">My Links</h1>
           <p className="text-body-md text-on-surface-variant">Manage all your shortened URLs</p>
@@ -157,7 +157,7 @@ export default function LinksPage() {
           variant="primary"
           size="lg"
           onClick={() => setShowCreateForm(!showCreateForm)}
-          className="uppercase tracking-widest text-xs"
+          className="uppercase tracking-widest text-xs w-full sm:w-auto"
         >
           {showCreateForm ? 'Cancel' : 'Create Link'}
           <span className="material-symbols-outlined">add</span>

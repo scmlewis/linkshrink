@@ -117,11 +117,11 @@ export default function ApiKeysPage() {
   }
 
   return (
-    <div className="flex flex-col lg:min-h-screen lg:items-center lg:justify-center px-4 py-6 lg:py-8">
-      <div className="space-y-6 max-w-4xl w-full">
+    <div className="flex flex-col px-4 py-6 lg:py-8">
+      <div className="space-y-6 max-w-4xl w-full mx-auto">
         {/* Header */}
-        <div className="flex flex-col items-center justify-center text-center lg:pt-0 pt-4">
-          <div>
+        <div className="sticky top-0 z-20 bg-gradient-to-b from-surface-container to-transparent pb-4 -mx-4 px-4 lg:-mx-10 lg:px-10 py-4 flex flex-col items-center justify-center text-center">
+          <div className="mb-4">
             <h1 className="text-h1 font-bold text-on-surface">API Keys</h1>
             <p className="text-body-md text-on-surface-variant">
               Manage API keys for programmatic access
@@ -130,7 +130,7 @@ export default function ApiKeysPage() {
           <Button
             variant="primary"
             onClick={() => setShowCreateModal(true)}
-            className="mt-4"
+            className="mt-2 w-full sm:w-auto"
           >
             <span className="material-symbols-outlined">add</span>
             Create Key

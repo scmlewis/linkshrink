@@ -307,10 +307,10 @@ export default function SettingsPage() {
   const maskedKey = apiKeyLast4 ? `sk_live_****${apiKeyLast4}` : 'No API key yet';
 
   return (
-    <div className="flex items-center justify-center min-h-screen px-4 py-8">
+    <div className="flex items-center justify-center px-4 py-8">
       <div className="space-y-6 max-w-2xl w-full">
         {/* Header */}
-        <div className="text-center">
+        <div className="sticky top-0 z-20 bg-gradient-to-b from-surface-container to-transparent pb-4 -mx-4 px-4 lg:-mx-10 lg:px-10 py-4 text-center">
           <h1 className="text-h1 font-bold text-on-surface">Settings</h1>
           <p className="text-body-md text-on-surface-variant">Manage your account preferences</p>
         </div>

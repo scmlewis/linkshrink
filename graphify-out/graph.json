@@ -1,0 +1,2829 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "auth_flow",
+        "label": "Authentication Flow",
+        "nodes": [
+          "session-provider",
+          "next-auth",
+          "signup-route",
+          "account-route",
+          "users-table"
+        ],
+        "relation": "authentication_system",
+        "confidence": "INFERRED"
+      },
+      {
+        "id": "styling_pipeline",
+        "label": "Styling Pipeline",
+        "nodes": [
+          "tailwind-css",
+          "postcss",
+          "postcss-config",
+          "tailwind-config"
+        ],
+        "relation": "style_processing",
+        "confidence": "INFERRED"
+      },
+      {
+        "id": "api_management",
+        "label": "API Key Management",
+        "nodes": [
+          "api-keys-route",
+          "api-keys-table",
+          "users-table"
+        ],
+        "relation": "api_key_system",
+        "confidence": "INFERRED"
+      },
+      {
+        "id": "data_layer",
+        "label": "Data Persistence Layer",
+        "nodes": [
+          "supabase",
+          "users-table",
+          "links-table",
+          "tags-table",
+          "analytics-table",
+          "api-keys-table"
+        ],
+        "relation": "database_schema",
+        "confidence": "INFERRED"
+      },
+      {
+        "id": "group_auth_flow",
+        "label": "Authentication Flow",
+        "members": [
+          "page_signin",
+          "page_signup",
+          "page_auth_error",
+          "route_auth",
+          "lib_auth",
+          "pkg_nextauth"
+        ],
+        "relation": "authentication system"
+      },
+      {
+        "id": "group_dashboard",
+        "label": "Dashboard Section",
+        "members": [
+          "layout_dashboard",
+          "page_dashboard_home",
+          "page_analytics",
+          "page_links",
+          "page_link_detail",
+          "page_settings",
+          "page_api_keys"
+        ],
+        "relation": "dashboard UI pages"
+      },
+      {
+        "id": "group_link_management",
+        "label": "Link Management API",
+        "members": [
+          "route_links",
+          "route_link_detail",
+          "fn_createlink",
+          "fn_getlink",
+          "fn_updatelink",
+          "fn_deletelink",
+          "fn_getuserlinks",
+          "lib_links"
+        ],
+        "relation": "link CRUD operations"
+      },
+      {
+        "id": "group_analytics",
+        "label": "Analytics System",
+        "members": [
+          "route_export",
+          "fn_recordclick",
+          "fn_incrementclick",
+          "lib_analytics",
+          "page_analytics"
+        ],
+        "relation": "click tracking and analytics"
+      },
+      {
+        "id": "group_redirect",
+        "label": "Link Redirect System",
+        "members": [
+          "route_redirect",
+          "fn_getlinkbyshortcode",
+          "fn_recordclick"
+        ],
+        "relation": "short URL redirect handling"
+      },
+      {
+        "nodes": [
+          "db_users_table",
+          "db_links_table",
+          "db_analytics_table"
+        ],
+        "relation": "form user tracking data flow",
+        "label": "Link Analytics System"
+      },
+      {
+        "nodes": [
+          "lib_useForm",
+          "lib_validation",
+          "test_useForm",
+          "test_validation"
+        ],
+        "relation": "comprise form validation infrastructure",
+        "label": "Form Management System"
+      },
+      {
+        "nodes": [
+          "test_account_route",
+          "test_api_keys_route",
+          "test_user_route",
+          "test_export_route",
+          "test_preferences_route"
+        ],
+        "relation": "test API endpoints",
+        "label": "API Route Test Suite"
+      },
+      {
+        "nodes": [
+          "deployment_local",
+          "deployment_vercel",
+          "db_schema"
+        ],
+        "relation": "required for deployment",
+        "label": "Deployment Pipeline"
+      },
+      {
+        "id": "tech_stack",
+        "label": "Tech Stack",
+        "nodes": [
+          "nextjs",
+          "react",
+          "typescript",
+          "tailwind",
+          "supabase",
+          "postgresql",
+          "nextauth",
+          "vercel"
+        ],
+        "description": "Complete technology stack for LinkShrink"
+      },
+      {
+        "id": "features",
+        "label": "Core Features",
+        "nodes": [
+          "url_shortening",
+          "analytics",
+          "custom_aliases",
+          "tag_org",
+          "qr_codes",
+          "api_keys",
+          "dark_mode",
+          "responsive"
+        ],
+        "description": "Primary feature set of LinkShrink"
+      },
+      {
+        "id": "testing",
+        "label": "Testing Infrastructure",
+        "nodes": [
+          "vitest",
+          "testing_lib",
+          "github_actions"
+        ],
+        "description": "Quality assurance and CI/CD pipeline"
+      },
+      {
+        "id": "deployment_options",
+        "label": "Deployment Options",
+        "nodes": [
+          "vercel",
+          "railway",
+          "aws",
+          "digitalocean",
+          "cloudflare"
+        ],
+        "description": "Available hosting platforms compared in analysis"
+      },
+      {
+        "id": "documentation",
+        "label": "Documentation Set",
+        "nodes": [
+          "readme",
+          "deploy_vercel",
+          "quick_start",
+          "housekeeping",
+          "hosting_analysis",
+          "proj_summary"
+        ],
+        "description": "Production and reference documentation"
+      },
+      {
+        "id": "containerization",
+        "label": "Containerization",
+        "nodes": [
+          "docker",
+          "docker_compose",
+          "dockerfile"
+        ],
+        "description": "Docker deployment setup"
+      },
+      {
+        "label": "UI Component System",
+        "nodes": [
+          "badge_component",
+          "button_component",
+          "card_component",
+          "checkbox_component",
+          "divider_component",
+          "input_component",
+          "modal_component",
+          "select_component",
+          "textarea_component",
+          "spinner_component",
+          "skeleton_component",
+          "toast_component",
+          "error_boundary_component",
+          "error_page_component",
+          "ui_index"
+        ],
+        "description": "Composable React UI components for building user interfaces"
+      },
+      {
+        "label": "Form Management",
+        "nodes": [
+          "form_field_component",
+          "input_component",
+          "textarea_component",
+          "select_component",
+          "validation_module",
+          "use_form_hook"
+        ],
+        "description": "Form input components and validation/state management"
+      },
+      {
+        "label": "Backend Services",
+        "nodes": [
+          "supabase_module",
+          "auth_module",
+          "links_module",
+          "analytics_module",
+          "types_module"
+        ],
+        "description": "Database, authentication, and business logic services"
+      },
+      {
+        "label": "URL Processing",
+        "nodes": [
+          "shortener_module",
+          "links_module"
+        ],
+        "description": "URL shortening and link management"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "label": "Next.js Framework",
+      "file_type": "code",
+      "id": "next-js"
+    },
+    {
+      "label": "React",
+      "file_type": "code",
+      "id": "react"
+    },
+    {
+      "label": "TypeScript",
+      "file_type": "code",
+      "id": "typescript"
+    },
+    {
+      "label": "Tailwind CSS",
+      "file_type": "code",
+      "id": "tailwind-css"
+    },
+    {
+      "label": "PostCSS",
+      "file_type": "code",
+      "id": "postcss"
+    },
+    {
+      "label": "NextAuth.js",
+      "file_type": "code",
+      "id": "next-auth"
+    },
+    {
+      "label": "Supabase",
+      "file_type": "code",
+      "id": "supabase"
+    },
+    {
+      "label": "Vitest",
+      "file_type": "code",
+      "id": "vitest"
+    },
+    {
+      "label": "ESLint",
+      "file_type": "code",
+      "id": "eslint"
+    },
+    {
+      "label": "PapaParse",
+      "file_type": "code",
+      "id": "papaparse"
+    },
+    {
+      "label": "QRCode Library",
+      "file_type": "code",
+      "id": "qrcode-lib"
+    },
+    {
+      "label": "Root Layout Component",
+      "file_type": "code",
+      "id": "layout-tsx"
+    },
+    {
+      "label": "Home Page",
+      "file_type": "code",
+      "id": "page-tsx"
+    },
+    {
+      "label": "Error Boundary",
+      "file_type": "code",
+      "id": "error-tsx"
+    },
+    {
+      "label": "404 Not Found Page",
+      "file_type": "code",
+      "id": "not-found-tsx"
+    },
+    {
+      "label": "Providers Context",
+      "file_type": "code",
+      "id": "providers-tsx"
+    },
+    {
+      "label": "Account API Route",
+      "file_type": "code",
+      "id": "account-route"
+    },
+    {
+      "label": "Analytics API Route",
+      "file_type": "code",
+      "id": "analytics-route"
+    },
+    {
+      "label": "API Keys API Route",
+      "file_type": "code",
+      "id": "api-keys-route"
+    },
+    {
+      "label": "Signup API Route",
+      "file_type": "code",
+      "id": "signup-route"
+    },
+    {
+      "label": "Users Database Table",
+      "file_type": "document",
+      "id": "users-table"
+    },
+    {
+      "label": "Links Database Table",
+      "file_type": "document",
+      "id": "links-table"
+    },
+    {
+      "label": "Tags Database Table",
+      "file_type": "document",
+      "id": "tags-table"
+    },
+    {
+      "label": "Analytics Database Table",
+      "file_type": "document",
+      "id": "analytics-table"
+    },
+    {
+      "label": "API Keys Database Table",
+      "file_type": "document",
+      "id": "api-keys-table"
+    },
+    {
+      "label": "ESLint Configuration",
+      "file_type": "document",
+      "id": "eslint-config"
+    },
+    {
+      "label": "Tailwind Configuration",
+      "file_type": "document",
+      "id": "tailwind-config"
+    },
+    {
+      "label": "PostCSS Configuration",
+      "file_type": "document",
+      "id": "postcss-config"
+    },
+    {
+      "label": "Next.js Configuration",
+      "file_type": "document",
+      "id": "next-config"
+    },
+    {
+      "label": "Vitest Configuration",
+      "file_type": "document",
+      "id": "vitest-config"
+    },
+    {
+      "label": "Next.js Type Definitions",
+      "file_type": "document",
+      "id": "next-env-types"
+    },
+    {
+      "label": "PapaParse Type Definitions",
+      "file_type": "document",
+      "id": "papaparse-types"
+    },
+    {
+      "label": "QRCode Type Definitions",
+      "file_type": "document",
+      "id": "qrcode-types"
+    },
+    {
+      "label": "NextAuth SessionProvider",
+      "file_type": "code",
+      "id": "session-provider"
+    },
+    {
+      "label": "Toast Provider",
+      "file_type": "code",
+      "id": "toast-provider"
+    },
+    {
+      "label": "SignIn Page",
+      "file_type": "code",
+      "id": "page_signin"
+    },
+    {
+      "label": "SignUp Page",
+      "file_type": "code",
+      "id": "page_signup"
+    },
+    {
+      "label": "AuthError Page",
+      "file_type": "code",
+      "id": "page_auth_error"
+    },
+    {
+      "label": "Dashboard Layout",
+      "file_type": "code",
+      "id": "layout_dashboard"
+    },
+    {
+      "label": "Dashboard Home",
+      "file_type": "code",
+      "id": "page_dashboard_home"
+    },
+    {
+      "label": "Analytics Page",
+      "file_type": "code",
+      "id": "page_analytics"
+    },
+    {
+      "label": "API Keys Page",
+      "file_type": "code",
+      "id": "page_api_keys"
+    },
+    {
+      "label": "Links Page",
+      "file_type": "code",
+      "id": "page_links"
+    },
+    {
+      "label": "Link Detail Page",
+      "file_type": "code",
+      "id": "page_link_detail"
+    },
+    {
+      "label": "Settings Page",
+      "file_type": "code",
+      "id": "page_settings"
+    },
+    {
+      "label": "Auth NextAuth Route",
+      "file_type": "code",
+      "id": "route_auth"
+    },
+    {
+      "label": "Export Route",
+      "file_type": "code",
+      "id": "route_export"
+    },
+    {
+      "label": "Links GET/POST Route",
+      "file_type": "code",
+      "id": "route_links"
+    },
+    {
+      "label": "Link Detail CRUD Route",
+      "file_type": "code",
+      "id": "route_link_detail"
+    },
+    {
+      "label": "Preferences Route",
+      "file_type": "code",
+      "id": "route_preferences"
+    },
+    {
+      "label": "QR Code Route",
+      "file_type": "code",
+      "id": "route_qr"
+    },
+    {
+      "label": "User Profile Route",
+      "file_type": "code",
+      "id": "route_user"
+    },
+    {
+      "label": "Short Code Redirect Route",
+      "file_type": "code",
+      "id": "route_redirect"
+    },
+    {
+      "label": "Badge Component",
+      "file_type": "code",
+      "id": "component_badge"
+    },
+    {
+      "label": "Button Component",
+      "file_type": "code",
+      "id": "component_button"
+    },
+    {
+      "label": "Auth Library",
+      "file_type": "code",
+      "id": "lib_auth"
+    },
+    {
+      "label": "Links Library",
+      "file_type": "code",
+      "id": "lib_links"
+    },
+    {
+      "label": "Supabase Client",
+      "file_type": "code",
+      "id": "lib_supabase"
+    },
+    {
+      "label": "Analytics Library",
+      "file_type": "code",
+      "id": "lib_analytics"
+    },
+    {
+      "label": "Utilities Library",
+      "file_type": "code",
+      "id": "lib_utils"
+    },
+    {
+      "label": "useForm Hook",
+      "file_type": "code",
+      "id": "lib_useform"
+    },
+    {
+      "label": "getLink()",
+      "file_type": "code",
+      "id": "fn_getlink"
+    },
+    {
+      "label": "createLink()",
+      "file_type": "code",
+      "id": "fn_createlink"
+    },
+    {
+      "label": "updateLink()",
+      "file_type": "code",
+      "id": "fn_updatelink"
+    },
+    {
+      "label": "deleteLink()",
+      "file_type": "code",
+      "id": "fn_deletelink"
+    },
+    {
+      "label": "getLinkByShortCode()",
+      "file_type": "code",
+      "id": "fn_getlinkbyshortcode"
+    },
+    {
+      "label": "recordClick()",
+      "file_type": "code",
+      "id": "fn_recordclick"
+    },
+    {
+      "label": "incrementClickCount()",
+      "file_type": "code",
+      "id": "fn_incrementclick"
+    },
+    {
+      "label": "getUserLinks()",
+      "file_type": "code",
+      "id": "fn_getuserlinks"
+    },
+    {
+      "label": "next-auth",
+      "file_type": "code",
+      "id": "pkg_nextauth"
+    },
+    {
+      "label": "QRCode Library",
+      "file_type": "code",
+      "id": "pkg_qrcode"
+    },
+    {
+      "label": "Papa Parse (CSV)",
+      "file_type": "code",
+      "id": "pkg_papaparse"
+    },
+    {
+      "label": "useForm Hook",
+      "file_type": "code",
+      "id": "lib_useForm"
+    },
+    {
+      "label": "Validation Module",
+      "file_type": "code",
+      "id": "lib_validation"
+    },
+    {
+      "label": "Database Schema",
+      "file_type": "document",
+      "id": "db_schema"
+    },
+    {
+      "label": "Users Table",
+      "file_type": "code",
+      "id": "db_users_table"
+    },
+    {
+      "label": "Links Table",
+      "file_type": "code",
+      "id": "db_links_table"
+    },
+    {
+      "label": "Analytics Table",
+      "file_type": "code",
+      "id": "db_analytics_table"
+    },
+    {
+      "label": "API Keys Table",
+      "file_type": "code",
+      "id": "db_api_keys_table"
+    },
+    {
+      "label": "Preferences Table",
+      "file_type": "code",
+      "id": "db_preferences_table"
+    },
+    {
+      "label": "Tags Table",
+      "file_type": "code",
+      "id": "db_tags_table"
+    },
+    {
+      "label": "useForm Tests",
+      "file_type": "code",
+      "id": "test_useForm"
+    },
+    {
+      "label": "Validation Tests",
+      "file_type": "code",
+      "id": "test_validation"
+    },
+    {
+      "label": "Utils Tests",
+      "file_type": "code",
+      "id": "test_utils"
+    },
+    {
+      "label": "buildShortUrl Tests",
+      "file_type": "code",
+      "id": "test_buildShortUrl"
+    },
+    {
+      "label": "Account Route Tests",
+      "file_type": "code",
+      "id": "test_account_route"
+    },
+    {
+      "label": "API Keys Route Tests",
+      "file_type": "code",
+      "id": "test_api_keys_route"
+    },
+    {
+      "label": "User Route Tests",
+      "file_type": "code",
+      "id": "test_user_route"
+    },
+    {
+      "label": "Export Route Tests",
+      "file_type": "code",
+      "id": "test_export_route"
+    },
+    {
+      "label": "Preferences Route Tests",
+      "file_type": "code",
+      "id": "test_preferences_route"
+    },
+    {
+      "label": "Required Validator",
+      "file_type": "code",
+      "id": "validators_required"
+    },
+    {
+      "label": "Email Validator",
+      "file_type": "code",
+      "id": "validators_email"
+    },
+    {
+      "label": "Password Validator",
+      "file_type": "code",
+      "id": "validators_password"
+    },
+    {
+      "label": "URL Validator",
+      "file_type": "code",
+      "id": "validators_url"
+    },
+    {
+      "label": "Min Length Validator",
+      "file_type": "code",
+      "id": "validators_minLength"
+    },
+    {
+      "label": "Max Length Validator",
+      "file_type": "code",
+      "id": "validators_maxLength"
+    },
+    {
+      "label": "formatDate Function",
+      "file_type": "code",
+      "id": "utils_formatDate"
+    },
+    {
+      "label": "formatNumber Function",
+      "file_type": "code",
+      "id": "utils_formatNumber"
+    },
+    {
+      "label": "buildShortUrl Function",
+      "file_type": "code",
+      "id": "utils_buildShortUrl"
+    },
+    {
+      "label": "parseUserAgent Function",
+      "file_type": "code",
+      "id": "utils_parseUserAgent"
+    },
+    {
+      "label": "copyToClipboard Function",
+      "file_type": "code",
+      "id": "utils_copyToClipboard"
+    },
+    {
+      "label": "Local Development Deployment",
+      "file_type": "document",
+      "id": "deployment_local"
+    },
+    {
+      "label": "Vercel Deployment",
+      "file_type": "document",
+      "id": "deployment_vercel"
+    },
+    {
+      "label": "Database Verification",
+      "file_type": "document",
+      "id": "db_verification"
+    },
+    {
+      "label": "Agent Configuration",
+      "file_type": "document",
+      "id": "agents_config"
+    },
+    {
+      "label": "LinkShrink",
+      "file_type": "project",
+      "id": "linkshrink"
+    },
+    {
+      "label": "Next.js 16",
+      "file_type": "code",
+      "id": "nextjs"
+    },
+    {
+      "label": "Tailwind CSS",
+      "file_type": "code",
+      "id": "tailwind"
+    },
+    {
+      "label": "PostgreSQL",
+      "file_type": "code",
+      "id": "postgresql"
+    },
+    {
+      "label": "NextAuth.js",
+      "file_type": "code",
+      "id": "nextauth"
+    },
+    {
+      "label": "Vercel",
+      "file_type": "code",
+      "id": "vercel"
+    },
+    {
+      "label": "Docker",
+      "file_type": "code",
+      "id": "docker"
+    },
+    {
+      "label": "React Testing Library",
+      "file_type": "code",
+      "id": "testing_lib"
+    },
+    {
+      "label": "GitHub Actions",
+      "file_type": "code",
+      "id": "github_actions"
+    },
+    {
+      "label": "Component Library",
+      "file_type": "code",
+      "id": "component_lib"
+    },
+    {
+      "label": "Dashboard",
+      "file_type": "code",
+      "id": "dashboard"
+    },
+    {
+      "label": "Analytics System",
+      "file_type": "code",
+      "id": "analytics"
+    },
+    {
+      "label": "URL Shortening",
+      "file_type": "code",
+      "id": "url_shortening"
+    },
+    {
+      "label": "API Key Management",
+      "file_type": "code",
+      "id": "api_keys"
+    },
+    {
+      "label": "QR Code Generation",
+      "file_type": "code",
+      "id": "qr_codes"
+    },
+    {
+      "label": "Authentication System",
+      "file_type": "code",
+      "id": "auth_system"
+    },
+    {
+      "label": "Link Management System",
+      "file_type": "code",
+      "id": "link_management"
+    },
+    {
+      "label": "Custom Aliases",
+      "file_type": "code",
+      "id": "custom_aliases"
+    },
+    {
+      "label": "Tag Organization",
+      "file_type": "code",
+      "id": "tag_org"
+    },
+    {
+      "label": "Dark Mode Theme",
+      "file_type": "code",
+      "id": "dark_mode"
+    },
+    {
+      "label": "Responsive Design",
+      "file_type": "code",
+      "id": "responsive"
+    },
+    {
+      "label": "Row-Level Security",
+      "file_type": "code",
+      "id": "rls"
+    },
+    {
+      "label": "OAuth Providers",
+      "file_type": "code",
+      "id": "oauth"
+    },
+    {
+      "label": "README.md",
+      "file_type": "document",
+      "id": "readme"
+    },
+    {
+      "label": "DEPLOYMENT_VERCEL.md",
+      "file_type": "document",
+      "id": "deploy_vercel"
+    },
+    {
+      "label": "HOUSEKEEPING_COMPLETE.md",
+      "file_type": "document",
+      "id": "housekeeping"
+    },
+    {
+      "label": "QUICK_START_DEPLOY.md",
+      "file_type": "document",
+      "id": "quick_start"
+    },
+    {
+      "label": "PROJECT_SUMMARY.md",
+      "file_type": "document",
+      "id": "proj_summary"
+    },
+    {
+      "label": "HOSTING_ANALYSIS.md",
+      "file_type": "document",
+      "id": "hosting_analysis"
+    },
+    {
+      "label": "docker-compose.yml",
+      "file_type": "document",
+      "id": "docker_compose"
+    },
+    {
+      "label": "Dockerfile",
+      "file_type": "document",
+      "id": "dockerfile"
+    },
+    {
+      "label": "_archive/INDEX.md",
+      "file_type": "document",
+      "id": "archive_index"
+    },
+    {
+      "label": "_archive/docs/AGENTS.md",
+      "file_type": "document",
+      "id": "agents_doc"
+    },
+    {
+      "label": "_archive/docs/DEPLOYMENT.md",
+      "file_type": "document",
+      "id": "archive_deployment"
+    },
+    {
+      "label": "_archive/docs/PROJECT_SUMMARY.md",
+      "file_type": "document",
+      "id": "archive_proj_summary"
+    },
+    {
+      "label": "_archive/dev-tools/README.md",
+      "file_type": "document",
+      "id": "dev_tools_readme"
+    },
+    {
+      "label": "Railway",
+      "file_type": "code",
+      "id": "railway"
+    },
+    {
+      "label": "AWS",
+      "file_type": "code",
+      "id": "aws"
+    },
+    {
+      "label": "DigitalOcean",
+      "file_type": "code",
+      "id": "digitalocean"
+    },
+    {
+      "label": "Cloudflare Pages",
+      "file_type": "code",
+      "id": "cloudflare"
+    },
+    {
+      "label": "GitHub",
+      "file_type": "code",
+      "id": "github"
+    },
+    {
+      "label": "Zod Validation",
+      "file_type": "code",
+      "id": "zod"
+    },
+    {
+      "label": "API Layer",
+      "file_type": "code",
+      "id": "api_layer"
+    },
+    {
+      "label": "Badge",
+      "file_type": "code",
+      "id": "badge_component"
+    },
+    {
+      "label": "Button",
+      "file_type": "code",
+      "id": "button_component"
+    },
+    {
+      "label": "Card",
+      "file_type": "code",
+      "id": "card_component"
+    },
+    {
+      "label": "Checkbox",
+      "file_type": "code",
+      "id": "checkbox_component"
+    },
+    {
+      "label": "Divider",
+      "file_type": "code",
+      "id": "divider_component"
+    },
+    {
+      "label": "Input",
+      "file_type": "code",
+      "id": "input_component"
+    },
+    {
+      "label": "Modal",
+      "file_type": "code",
+      "id": "modal_component"
+    },
+    {
+      "label": "Select",
+      "file_type": "code",
+      "id": "select_component"
+    },
+    {
+      "label": "Textarea",
+      "file_type": "code",
+      "id": "textarea_component"
+    },
+    {
+      "label": "Spinner",
+      "file_type": "code",
+      "id": "spinner_component"
+    },
+    {
+      "label": "Skeleton",
+      "file_type": "code",
+      "id": "skeleton_component"
+    },
+    {
+      "label": "Toast",
+      "file_type": "code",
+      "id": "toast_component"
+    },
+    {
+      "label": "ErrorBoundary",
+      "file_type": "code",
+      "id": "error_boundary_component"
+    },
+    {
+      "label": "ErrorPage",
+      "file_type": "code",
+      "id": "error_page_component"
+    },
+    {
+      "label": "FormField",
+      "file_type": "code",
+      "id": "form_field_component"
+    },
+    {
+      "label": "UI Index",
+      "file_type": "code",
+      "id": "ui_index"
+    },
+    {
+      "label": "types",
+      "file_type": "code",
+      "id": "types_module"
+    },
+    {
+      "label": "supabase",
+      "file_type": "code",
+      "id": "supabase_module"
+    },
+    {
+      "label": "auth",
+      "file_type": "code",
+      "id": "auth_module"
+    },
+    {
+      "label": "validation",
+      "file_type": "code",
+      "id": "validation_module"
+    },
+    {
+      "label": "shortener",
+      "file_type": "code",
+      "id": "shortener_module"
+    },
+    {
+      "label": "links",
+      "file_type": "code",
+      "id": "links_module"
+    },
+    {
+      "label": "analytics",
+      "file_type": "code",
+      "id": "analytics_module"
+    },
+    {
+      "label": "utils",
+      "file_type": "code",
+      "id": "utils_module"
+    },
+    {
+      "label": "useForm",
+      "file_type": "code",
+      "id": "use_form_hook"
+    }
+  ],
+  "edges": [
+    {
+      "relation": "built_with",
+      "confidence": "EXTRACTED",
+      "_src": "layout-tsx",
+      "_tgt": "next-js",
+      "source": "next-js",
+      "target": "layout-tsx"
+    },
+    {
+      "relation": "configures",
+      "confidence": "EXTRACTED",
+      "_src": "eslint-config",
+      "_tgt": "next-js",
+      "source": "next-js",
+      "target": "eslint-config"
+    },
+    {
+      "relation": "configures",
+      "confidence": "EXTRACTED",
+      "_src": "next-config",
+      "_tgt": "next-js",
+      "source": "next-js",
+      "target": "next-config"
+    },
+    {
+      "relation": "defines_types_for",
+      "confidence": "EXTRACTED",
+      "_src": "next-env-types",
+      "_tgt": "next-js",
+      "source": "next-js",
+      "target": "next-env-types"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "layout-tsx",
+      "_tgt": "react",
+      "source": "react",
+      "target": "layout-tsx"
+    },
+    {
+      "relation": "built_with",
+      "confidence": "EXTRACTED",
+      "_src": "page-tsx",
+      "_tgt": "react",
+      "source": "react",
+      "target": "page-tsx"
+    },
+    {
+      "relation": "built_with",
+      "confidence": "EXTRACTED",
+      "_src": "error-tsx",
+      "_tgt": "react",
+      "source": "react",
+      "target": "error-tsx"
+    },
+    {
+      "relation": "tests",
+      "confidence": "EXTRACTED",
+      "_src": "vitest-config",
+      "_tgt": "react",
+      "source": "react",
+      "target": "vitest-config"
+    },
+    {
+      "relation": "includes",
+      "confidence": "EXTRACTED",
+      "_src": "nextjs",
+      "_tgt": "react",
+      "source": "react",
+      "target": "nextjs"
+    },
+    {
+      "relation": "uses_crypto_from",
+      "confidence": "EXTRACTED",
+      "_src": "api-keys-route",
+      "_tgt": "typescript",
+      "source": "typescript",
+      "target": "api-keys-route"
+    },
+    {
+      "relation": "configures_for",
+      "confidence": "EXTRACTED",
+      "_src": "eslint-config",
+      "_tgt": "typescript",
+      "source": "typescript",
+      "target": "eslint-config"
+    },
+    {
+      "relation": "provides_types_to",
+      "confidence": "EXTRACTED",
+      "_src": "next-env-types",
+      "_tgt": "typescript",
+      "source": "typescript",
+      "target": "next-env-types"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "typescript",
+      "source": "typescript",
+      "target": "linkshrink"
+    },
+    {
+      "relation": "configures",
+      "confidence": "EXTRACTED",
+      "_src": "tailwind-config",
+      "_tgt": "tailwind-css",
+      "source": "tailwind-css",
+      "target": "tailwind-config"
+    },
+    {
+      "relation": "integrates",
+      "confidence": "EXTRACTED",
+      "_src": "postcss-config",
+      "_tgt": "tailwind-css",
+      "source": "tailwind-css",
+      "target": "postcss-config"
+    },
+    {
+      "relation": "styles_with",
+      "confidence": "EXTRACTED",
+      "_src": "layout-tsx",
+      "_tgt": "tailwind-css",
+      "source": "tailwind-css",
+      "target": "layout-tsx"
+    },
+    {
+      "relation": "styles_with",
+      "confidence": "EXTRACTED",
+      "_src": "page-tsx",
+      "_tgt": "tailwind-css",
+      "source": "tailwind-css",
+      "target": "page-tsx"
+    },
+    {
+      "relation": "configures",
+      "confidence": "EXTRACTED",
+      "_src": "postcss-config",
+      "_tgt": "postcss",
+      "source": "postcss",
+      "target": "postcss-config"
+    },
+    {
+      "relation": "uses_for_auth",
+      "confidence": "EXTRACTED",
+      "_src": "page-tsx",
+      "_tgt": "next-auth",
+      "source": "next-auth",
+      "target": "page-tsx"
+    },
+    {
+      "relation": "uses_for_auth",
+      "confidence": "EXTRACTED",
+      "_src": "account-route",
+      "_tgt": "next-auth",
+      "source": "next-auth",
+      "target": "account-route"
+    },
+    {
+      "relation": "uses_for_auth",
+      "confidence": "EXTRACTED",
+      "_src": "analytics-route",
+      "_tgt": "next-auth",
+      "source": "next-auth",
+      "target": "analytics-route"
+    },
+    {
+      "relation": "provided_by",
+      "confidence": "EXTRACTED",
+      "_src": "session-provider",
+      "_tgt": "next-auth",
+      "source": "next-auth",
+      "target": "session-provider"
+    },
+    {
+      "relation": "queries",
+      "confidence": "EXTRACTED",
+      "_src": "account-route",
+      "_tgt": "supabase",
+      "source": "supabase",
+      "target": "account-route"
+    },
+    {
+      "relation": "queries",
+      "confidence": "EXTRACTED",
+      "_src": "analytics-route",
+      "_tgt": "supabase",
+      "source": "supabase",
+      "target": "analytics-route"
+    },
+    {
+      "relation": "queries",
+      "confidence": "EXTRACTED",
+      "_src": "api-keys-route",
+      "_tgt": "supabase",
+      "source": "supabase",
+      "target": "api-keys-route"
+    },
+    {
+      "relation": "queries",
+      "confidence": "EXTRACTED",
+      "_src": "signup-route",
+      "_tgt": "supabase",
+      "source": "supabase",
+      "target": "signup-route"
+    },
+    {
+      "relation": "stored_in",
+      "confidence": "EXTRACTED",
+      "_src": "users-table",
+      "_tgt": "supabase",
+      "source": "supabase",
+      "target": "users-table"
+    },
+    {
+      "relation": "stored_in",
+      "confidence": "EXTRACTED",
+      "_src": "links-table",
+      "_tgt": "supabase",
+      "source": "supabase",
+      "target": "links-table"
+    },
+    {
+      "relation": "stored_in",
+      "confidence": "EXTRACTED",
+      "_src": "tags-table",
+      "_tgt": "supabase",
+      "source": "supabase",
+      "target": "tags-table"
+    },
+    {
+      "relation": "stored_in",
+      "confidence": "EXTRACTED",
+      "_src": "analytics-table",
+      "_tgt": "supabase",
+      "source": "supabase",
+      "target": "analytics-table"
+    },
+    {
+      "relation": "stored_in",
+      "confidence": "EXTRACTED",
+      "_src": "api-keys-table",
+      "_tgt": "supabase",
+      "source": "supabase",
+      "target": "api-keys-table"
+    },
+    {
+      "relation": "uses for database",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "supabase",
+      "source": "supabase",
+      "target": "linkshrink"
+    },
+    {
+      "relation": "backed by",
+      "confidence": "EXTRACTED",
+      "_src": "supabase",
+      "_tgt": "postgresql",
+      "source": "supabase",
+      "target": "postgresql"
+    },
+    {
+      "relation": "secured with",
+      "confidence": "EXTRACTED",
+      "_src": "supabase",
+      "_tgt": "rls",
+      "source": "supabase",
+      "target": "rls"
+    },
+    {
+      "relation": "configures",
+      "confidence": "EXTRACTED",
+      "_src": "vitest-config",
+      "_tgt": "vitest",
+      "source": "vitest",
+      "target": "vitest-config"
+    },
+    {
+      "relation": "tested with",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "vitest",
+      "source": "vitest",
+      "target": "linkshrink"
+    },
+    {
+      "relation": "defines_types_for",
+      "confidence": "EXTRACTED",
+      "_src": "papaparse-types",
+      "_tgt": "papaparse",
+      "source": "papaparse",
+      "target": "papaparse-types"
+    },
+    {
+      "relation": "defines_types_for",
+      "confidence": "EXTRACTED",
+      "_src": "qrcode-types",
+      "_tgt": "qrcode-lib",
+      "source": "qrcode-lib",
+      "target": "qrcode-types"
+    },
+    {
+      "relation": "wraps",
+      "confidence": "EXTRACTED",
+      "_src": "providers-tsx",
+      "_tgt": "session-provider",
+      "source": "providers-tsx",
+      "target": "session-provider"
+    },
+    {
+      "relation": "wraps",
+      "confidence": "EXTRACTED",
+      "_src": "providers-tsx",
+      "_tgt": "toast-provider",
+      "source": "providers-tsx",
+      "target": "toast-provider"
+    },
+    {
+      "relation": "deletes_from",
+      "confidence": "EXTRACTED",
+      "_src": "account-route",
+      "_tgt": "users-table",
+      "source": "account-route",
+      "target": "users-table"
+    },
+    {
+      "relation": "manages",
+      "confidence": "EXTRACTED",
+      "_src": "api-keys-route",
+      "_tgt": "api-keys-table",
+      "source": "api-keys-route",
+      "target": "api-keys-table"
+    },
+    {
+      "relation": "inserts_into",
+      "confidence": "EXTRACTED",
+      "_src": "signup-route",
+      "_tgt": "users-table",
+      "source": "signup-route",
+      "target": "users-table"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "_src": "links-table",
+      "_tgt": "users-table",
+      "source": "users-table",
+      "target": "links-table"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "_src": "api-keys-table",
+      "_tgt": "users-table",
+      "source": "users-table",
+      "target": "api-keys-table"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "_src": "tags-table",
+      "_tgt": "links-table",
+      "source": "links-table",
+      "target": "tags-table"
+    },
+    {
+      "relation": "renders",
+      "confidence": "EXTRACTED",
+      "_src": "page_signin",
+      "_tgt": "component_button",
+      "source": "page_signin",
+      "target": "component_button"
+    },
+    {
+      "relation": "uses signIn function",
+      "confidence": "EXTRACTED",
+      "_src": "page_signin",
+      "_tgt": "pkg_nextauth",
+      "source": "page_signin",
+      "target": "pkg_nextauth"
+    },
+    {
+      "relation": "renders",
+      "confidence": "EXTRACTED",
+      "_src": "page_signup",
+      "_tgt": "component_button",
+      "source": "page_signup",
+      "target": "component_button"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "page_signup",
+      "_tgt": "lib_useform",
+      "source": "page_signup",
+      "target": "lib_useform"
+    },
+    {
+      "relation": "uses signIn function",
+      "confidence": "EXTRACTED",
+      "_src": "page_signup",
+      "_tgt": "pkg_nextauth",
+      "source": "page_signup",
+      "target": "pkg_nextauth"
+    },
+    {
+      "relation": "renders",
+      "confidence": "EXTRACTED",
+      "_src": "page_auth_error",
+      "_tgt": "component_button",
+      "source": "page_auth_error",
+      "target": "component_button"
+    },
+    {
+      "relation": "uses useSession",
+      "confidence": "EXTRACTED",
+      "_src": "layout_dashboard",
+      "_tgt": "lib_auth",
+      "source": "layout_dashboard",
+      "target": "lib_auth"
+    },
+    {
+      "relation": "calls /api/analytics",
+      "confidence": "EXTRACTED",
+      "_src": "page_dashboard_home",
+      "_tgt": "route_export",
+      "source": "page_dashboard_home",
+      "target": "route_export"
+    },
+    {
+      "relation": "calls /api/links GET",
+      "confidence": "EXTRACTED",
+      "_src": "page_dashboard_home",
+      "_tgt": "route_links",
+      "source": "page_dashboard_home",
+      "target": "route_links"
+    },
+    {
+      "relation": "calls /api/qr/[linkId]",
+      "confidence": "EXTRACTED",
+      "_src": "page_dashboard_home",
+      "_tgt": "route_qr",
+      "source": "page_dashboard_home",
+      "target": "route_qr"
+    },
+    {
+      "relation": "renders",
+      "confidence": "EXTRACTED",
+      "_src": "page_dashboard_home",
+      "_tgt": "component_button",
+      "source": "page_dashboard_home",
+      "target": "component_button"
+    },
+    {
+      "relation": "uses utility functions",
+      "confidence": "EXTRACTED",
+      "_src": "page_dashboard_home",
+      "_tgt": "lib_utils",
+      "source": "page_dashboard_home",
+      "target": "lib_utils"
+    },
+    {
+      "relation": "calls /api/analytics",
+      "confidence": "EXTRACTED",
+      "_src": "page_analytics",
+      "_tgt": "route_export",
+      "source": "page_analytics",
+      "target": "route_export"
+    },
+    {
+      "relation": "renders",
+      "confidence": "EXTRACTED",
+      "_src": "page_analytics",
+      "_tgt": "component_button",
+      "source": "page_analytics",
+      "target": "component_button"
+    },
+    {
+      "relation": "calls /api/api-keys",
+      "confidence": "EXTRACTED",
+      "_src": "page_api_keys",
+      "_tgt": "route_user",
+      "source": "page_api_keys",
+      "target": "route_user"
+    },
+    {
+      "relation": "calls GET/POST /api/links",
+      "confidence": "EXTRACTED",
+      "_src": "page_links",
+      "_tgt": "route_links",
+      "source": "page_links",
+      "target": "route_links"
+    },
+    {
+      "relation": "calls DELETE /api/links/[id]",
+      "confidence": "EXTRACTED",
+      "_src": "page_links",
+      "_tgt": "route_link_detail",
+      "source": "page_links",
+      "target": "route_link_detail"
+    },
+    {
+      "relation": "calls GET /api/links/[id]",
+      "confidence": "EXTRACTED",
+      "_src": "page_link_detail",
+      "_tgt": "route_link_detail",
+      "source": "page_link_detail",
+      "target": "route_link_detail"
+    },
+    {
+      "relation": "calls GET /api/analytics/[id]",
+      "confidence": "EXTRACTED",
+      "_src": "page_link_detail",
+      "_tgt": "route_export",
+      "source": "page_link_detail",
+      "target": "route_export"
+    },
+    {
+      "relation": "calls GET/PUT /api/user",
+      "confidence": "EXTRACTED",
+      "_src": "page_settings",
+      "_tgt": "route_user",
+      "source": "page_settings",
+      "target": "route_user"
+    },
+    {
+      "relation": "calls GET/PUT /api/preferences",
+      "confidence": "EXTRACTED",
+      "_src": "page_settings",
+      "_tgt": "route_preferences",
+      "source": "page_settings",
+      "target": "route_preferences"
+    },
+    {
+      "relation": "exports handlers",
+      "confidence": "EXTRACTED",
+      "_src": "route_auth",
+      "_tgt": "lib_auth",
+      "source": "route_auth",
+      "target": "lib_auth"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "route_export",
+      "_tgt": "lib_auth",
+      "source": "route_export",
+      "target": "lib_auth"
+    },
+    {
+      "relation": "uses supabaseAdmin",
+      "confidence": "EXTRACTED",
+      "_src": "route_export",
+      "_tgt": "lib_supabase",
+      "source": "route_export",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "uses unparse",
+      "confidence": "EXTRACTED",
+      "_src": "route_export",
+      "_tgt": "pkg_papaparse",
+      "source": "route_export",
+      "target": "pkg_papaparse"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "route_links",
+      "_tgt": "lib_auth",
+      "source": "route_links",
+      "target": "lib_auth"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "_src": "route_links",
+      "_tgt": "fn_getuserlinks",
+      "source": "route_links",
+      "target": "fn_getuserlinks"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "_src": "route_links",
+      "_tgt": "fn_createlink",
+      "source": "route_links",
+      "target": "fn_createlink"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "route_link_detail",
+      "_tgt": "lib_auth",
+      "source": "route_link_detail",
+      "target": "lib_auth"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "_src": "route_link_detail",
+      "_tgt": "fn_getlink",
+      "source": "route_link_detail",
+      "target": "fn_getlink"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "_src": "route_link_detail",
+      "_tgt": "fn_updatelink",
+      "source": "route_link_detail",
+      "target": "fn_updatelink"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "_src": "route_link_detail",
+      "_tgt": "fn_deletelink",
+      "source": "route_link_detail",
+      "target": "fn_deletelink"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "route_preferences",
+      "_tgt": "lib_auth",
+      "source": "route_preferences",
+      "target": "lib_auth"
+    },
+    {
+      "relation": "uses supabaseAdmin",
+      "confidence": "EXTRACTED",
+      "_src": "route_preferences",
+      "_tgt": "lib_supabase",
+      "source": "route_preferences",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "route_qr",
+      "_tgt": "lib_auth",
+      "source": "route_qr",
+      "target": "lib_auth"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "_src": "route_qr",
+      "_tgt": "fn_getlink",
+      "source": "route_qr",
+      "target": "fn_getlink"
+    },
+    {
+      "relation": "uses QRCode.toDataURL",
+      "confidence": "EXTRACTED",
+      "_src": "route_qr",
+      "_tgt": "pkg_qrcode",
+      "source": "route_qr",
+      "target": "pkg_qrcode"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "route_user",
+      "_tgt": "lib_auth",
+      "source": "route_user",
+      "target": "lib_auth"
+    },
+    {
+      "relation": "uses supabaseAdmin",
+      "confidence": "EXTRACTED",
+      "_src": "route_user",
+      "_tgt": "lib_supabase",
+      "source": "route_user",
+      "target": "lib_supabase"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "_src": "route_redirect",
+      "_tgt": "fn_getlinkbyshortcode",
+      "source": "route_redirect",
+      "target": "fn_getlinkbyshortcode"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "_src": "route_redirect",
+      "_tgt": "fn_recordclick",
+      "source": "route_redirect",
+      "target": "fn_recordclick"
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "_src": "route_redirect",
+      "_tgt": "fn_incrementclick",
+      "source": "route_redirect",
+      "target": "fn_incrementclick"
+    },
+    {
+      "relation": "defined in",
+      "confidence": "EXTRACTED",
+      "_src": "fn_createlink",
+      "_tgt": "lib_links",
+      "source": "lib_links",
+      "target": "fn_createlink"
+    },
+    {
+      "relation": "defined in",
+      "confidence": "EXTRACTED",
+      "_src": "fn_getlink",
+      "_tgt": "lib_links",
+      "source": "lib_links",
+      "target": "fn_getlink"
+    },
+    {
+      "relation": "defined in",
+      "confidence": "EXTRACTED",
+      "_src": "fn_updatelink",
+      "_tgt": "lib_links",
+      "source": "lib_links",
+      "target": "fn_updatelink"
+    },
+    {
+      "relation": "defined in",
+      "confidence": "EXTRACTED",
+      "_src": "fn_deletelink",
+      "_tgt": "lib_links",
+      "source": "lib_links",
+      "target": "fn_deletelink"
+    },
+    {
+      "relation": "defined in",
+      "confidence": "EXTRACTED",
+      "_src": "fn_getlinkbyshortcode",
+      "_tgt": "lib_links",
+      "source": "lib_links",
+      "target": "fn_getlinkbyshortcode"
+    },
+    {
+      "relation": "defined in",
+      "confidence": "EXTRACTED",
+      "_src": "fn_incrementclick",
+      "_tgt": "lib_links",
+      "source": "lib_links",
+      "target": "fn_incrementclick"
+    },
+    {
+      "relation": "defined in",
+      "confidence": "EXTRACTED",
+      "_src": "fn_getuserlinks",
+      "_tgt": "lib_links",
+      "source": "lib_links",
+      "target": "fn_getuserlinks"
+    },
+    {
+      "relation": "defined in",
+      "confidence": "EXTRACTED",
+      "_src": "fn_recordclick",
+      "_tgt": "lib_analytics",
+      "source": "lib_analytics",
+      "target": "fn_recordclick"
+    },
+    {
+      "relation": "tests",
+      "confidence": "EXTRACTED",
+      "_src": "test_utils",
+      "_tgt": "lib_utils",
+      "source": "lib_utils",
+      "target": "test_utils"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "lib_utils",
+      "_tgt": "utils_formatDate",
+      "source": "lib_utils",
+      "target": "utils_formatDate"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "lib_utils",
+      "_tgt": "utils_formatNumber",
+      "source": "lib_utils",
+      "target": "utils_formatNumber"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "lib_utils",
+      "_tgt": "utils_buildShortUrl",
+      "source": "lib_utils",
+      "target": "utils_buildShortUrl"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "lib_utils",
+      "_tgt": "utils_parseUserAgent",
+      "source": "lib_utils",
+      "target": "utils_parseUserAgent"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "lib_utils",
+      "_tgt": "utils_copyToClipboard",
+      "source": "lib_utils",
+      "target": "utils_copyToClipboard"
+    },
+    {
+      "relation": "imports and uses",
+      "confidence": "EXTRACTED",
+      "_src": "lib_useForm",
+      "_tgt": "lib_validation",
+      "source": "lib_useForm",
+      "target": "lib_validation"
+    },
+    {
+      "relation": "is tested by",
+      "confidence": "INFERRED",
+      "_src": "lib_useForm",
+      "_tgt": "test_useForm",
+      "source": "lib_useForm",
+      "target": "test_useForm"
+    },
+    {
+      "relation": "tests",
+      "confidence": "EXTRACTED",
+      "_src": "test_validation",
+      "_tgt": "lib_validation",
+      "source": "lib_validation",
+      "target": "test_validation"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "lib_validation",
+      "_tgt": "validators_required",
+      "source": "lib_validation",
+      "target": "validators_required"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "lib_validation",
+      "_tgt": "validators_email",
+      "source": "lib_validation",
+      "target": "validators_email"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "lib_validation",
+      "_tgt": "validators_password",
+      "source": "lib_validation",
+      "target": "validators_password"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "lib_validation",
+      "_tgt": "validators_url",
+      "source": "lib_validation",
+      "target": "validators_url"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "lib_validation",
+      "_tgt": "validators_minLength",
+      "source": "lib_validation",
+      "target": "validators_minLength"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "lib_validation",
+      "_tgt": "validators_maxLength",
+      "source": "lib_validation",
+      "target": "validators_maxLength"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "_src": "db_schema",
+      "_tgt": "db_users_table",
+      "source": "db_schema",
+      "target": "db_users_table"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "_src": "db_schema",
+      "_tgt": "db_links_table",
+      "source": "db_schema",
+      "target": "db_links_table"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "_src": "db_schema",
+      "_tgt": "db_analytics_table",
+      "source": "db_schema",
+      "target": "db_analytics_table"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "_src": "db_schema",
+      "_tgt": "db_api_keys_table",
+      "source": "db_schema",
+      "target": "db_api_keys_table"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "_src": "db_schema",
+      "_tgt": "db_preferences_table",
+      "source": "db_schema",
+      "target": "db_preferences_table"
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "_src": "db_schema",
+      "_tgt": "db_tags_table",
+      "source": "db_schema",
+      "target": "db_tags_table"
+    },
+    {
+      "relation": "requires setup of",
+      "confidence": "EXTRACTED",
+      "_src": "deployment_local",
+      "_tgt": "db_schema",
+      "source": "db_schema",
+      "target": "deployment_local"
+    },
+    {
+      "relation": "requires setup of",
+      "confidence": "EXTRACTED",
+      "_src": "deployment_vercel",
+      "_tgt": "db_schema",
+      "source": "db_schema",
+      "target": "deployment_vercel"
+    },
+    {
+      "relation": "verifies",
+      "confidence": "EXTRACTED",
+      "_src": "db_verification",
+      "_tgt": "db_schema",
+      "source": "db_schema",
+      "target": "db_verification"
+    },
+    {
+      "relation": "has foreign key to",
+      "confidence": "EXTRACTED",
+      "_src": "db_links_table",
+      "_tgt": "db_users_table",
+      "source": "db_users_table",
+      "target": "db_links_table"
+    },
+    {
+      "relation": "has foreign key to",
+      "confidence": "EXTRACTED",
+      "_src": "db_api_keys_table",
+      "_tgt": "db_users_table",
+      "source": "db_users_table",
+      "target": "db_api_keys_table"
+    },
+    {
+      "relation": "has foreign key to",
+      "confidence": "EXTRACTED",
+      "_src": "db_preferences_table",
+      "_tgt": "db_users_table",
+      "source": "db_users_table",
+      "target": "db_preferences_table"
+    },
+    {
+      "relation": "tests delete operation on",
+      "confidence": "EXTRACTED",
+      "_src": "test_account_route",
+      "_tgt": "db_users_table",
+      "source": "db_users_table",
+      "target": "test_account_route"
+    },
+    {
+      "relation": "tests GET and PUT operations on",
+      "confidence": "EXTRACTED",
+      "_src": "test_user_route",
+      "_tgt": "db_users_table",
+      "source": "db_users_table",
+      "target": "test_user_route"
+    },
+    {
+      "relation": "has foreign key to",
+      "confidence": "EXTRACTED",
+      "_src": "db_analytics_table",
+      "_tgt": "db_links_table",
+      "source": "db_links_table",
+      "target": "db_analytics_table"
+    },
+    {
+      "relation": "has foreign key to",
+      "confidence": "EXTRACTED",
+      "_src": "db_tags_table",
+      "_tgt": "db_links_table",
+      "source": "db_links_table",
+      "target": "db_tags_table"
+    },
+    {
+      "relation": "tests export of",
+      "confidence": "EXTRACTED",
+      "_src": "test_export_route",
+      "_tgt": "db_links_table",
+      "source": "db_links_table",
+      "target": "test_export_route"
+    },
+    {
+      "relation": "tests export of",
+      "confidence": "EXTRACTED",
+      "_src": "test_export_route",
+      "_tgt": "db_analytics_table",
+      "source": "db_analytics_table",
+      "target": "test_export_route"
+    },
+    {
+      "relation": "tests CRUD operations on",
+      "confidence": "EXTRACTED",
+      "_src": "test_api_keys_route",
+      "_tgt": "db_api_keys_table",
+      "source": "db_api_keys_table",
+      "target": "test_api_keys_route"
+    },
+    {
+      "relation": "tests GET and PUT operations on",
+      "confidence": "EXTRACTED",
+      "_src": "test_preferences_route",
+      "_tgt": "db_preferences_table",
+      "source": "db_preferences_table",
+      "target": "test_preferences_route"
+    },
+    {
+      "relation": "tests",
+      "confidence": "EXTRACTED",
+      "_src": "test_buildShortUrl",
+      "_tgt": "utils_buildShortUrl",
+      "source": "test_buildShortUrl",
+      "target": "utils_buildShortUrl"
+    },
+    {
+      "relation": "configured in",
+      "confidence": "INFERRED",
+      "_src": "utils_buildShortUrl",
+      "_tgt": "deployment_vercel",
+      "source": "utils_buildShortUrl",
+      "target": "deployment_vercel"
+    },
+    {
+      "relation": "built with",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "nextjs",
+      "source": "linkshrink",
+      "target": "nextjs"
+    },
+    {
+      "relation": "styled with",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "tailwind",
+      "source": "linkshrink",
+      "target": "tailwind"
+    },
+    {
+      "relation": "authenticated by",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "nextauth",
+      "source": "linkshrink",
+      "target": "nextauth"
+    },
+    {
+      "relation": "deploys to",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "vercel",
+      "source": "linkshrink",
+      "target": "vercel"
+    },
+    {
+      "relation": "containerized with",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "docker",
+      "source": "linkshrink",
+      "target": "docker"
+    },
+    {
+      "relation": "tested with",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "testing_lib",
+      "source": "linkshrink",
+      "target": "testing_lib"
+    },
+    {
+      "relation": "CI/CD via",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "github_actions",
+      "source": "linkshrink",
+      "target": "github_actions"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "component_lib",
+      "source": "linkshrink",
+      "target": "component_lib"
+    },
+    {
+      "relation": "includes",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "dashboard",
+      "source": "linkshrink",
+      "target": "dashboard"
+    },
+    {
+      "relation": "provides",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "url_shortening",
+      "source": "linkshrink",
+      "target": "url_shortening"
+    },
+    {
+      "relation": "manages",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "api_keys",
+      "source": "linkshrink",
+      "target": "api_keys"
+    },
+    {
+      "relation": "generates",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "qr_codes",
+      "source": "linkshrink",
+      "target": "qr_codes"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "auth_system",
+      "source": "linkshrink",
+      "target": "auth_system"
+    },
+    {
+      "relation": "supports",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "custom_aliases",
+      "source": "linkshrink",
+      "target": "custom_aliases"
+    },
+    {
+      "relation": "organizes with",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "tag_org",
+      "source": "linkshrink",
+      "target": "tag_org"
+    },
+    {
+      "relation": "includes theme",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "dark_mode",
+      "source": "linkshrink",
+      "target": "dark_mode"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "responsive",
+      "source": "linkshrink",
+      "target": "responsive"
+    },
+    {
+      "relation": "validates with",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "zod",
+      "source": "linkshrink",
+      "target": "zod"
+    },
+    {
+      "relation": "documented in",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "readme",
+      "source": "linkshrink",
+      "target": "readme"
+    },
+    {
+      "relation": "deployment guide",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "deploy_vercel",
+      "source": "linkshrink",
+      "target": "deploy_vercel"
+    },
+    {
+      "relation": "documented in",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "housekeeping",
+      "source": "linkshrink",
+      "target": "housekeeping"
+    },
+    {
+      "relation": "deployment guide",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "quick_start",
+      "source": "linkshrink",
+      "target": "quick_start"
+    },
+    {
+      "relation": "described in",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "proj_summary",
+      "source": "linkshrink",
+      "target": "proj_summary"
+    },
+    {
+      "relation": "hosted on",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "github",
+      "source": "linkshrink",
+      "target": "github"
+    },
+    {
+      "relation": "indexes archive for",
+      "confidence": "EXTRACTED",
+      "_src": "archive_index",
+      "_tgt": "linkshrink",
+      "source": "linkshrink",
+      "target": "archive_index"
+    },
+    {
+      "relation": "implements",
+      "confidence": "EXTRACTED",
+      "_src": "linkshrink",
+      "_tgt": "api_layer",
+      "source": "linkshrink",
+      "target": "api_layer"
+    },
+    {
+      "relation": "optimized for",
+      "confidence": "EXTRACTED",
+      "_src": "vercel",
+      "_tgt": "nextjs",
+      "source": "nextjs",
+      "target": "vercel"
+    },
+    {
+      "relation": "includes service",
+      "confidence": "EXTRACTED",
+      "_src": "docker_compose",
+      "_tgt": "postgresql",
+      "source": "postgresql",
+      "target": "docker_compose"
+    },
+    {
+      "relation": "supports",
+      "confidence": "EXTRACTED",
+      "_src": "nextauth",
+      "_tgt": "oauth",
+      "source": "nextauth",
+      "target": "oauth"
+    },
+    {
+      "relation": "protected by",
+      "confidence": "INFERRED",
+      "_src": "api_layer",
+      "_tgt": "nextauth",
+      "source": "nextauth",
+      "target": "api_layer"
+    },
+    {
+      "relation": "instructs",
+      "confidence": "EXTRACTED",
+      "_src": "deploy_vercel",
+      "_tgt": "vercel",
+      "source": "vercel",
+      "target": "deploy_vercel"
+    },
+    {
+      "relation": "recommends",
+      "confidence": "EXTRACTED",
+      "_src": "hosting_analysis",
+      "_tgt": "vercel",
+      "source": "vercel",
+      "target": "hosting_analysis"
+    },
+    {
+      "relation": "configuration for",
+      "confidence": "EXTRACTED",
+      "_src": "docker_compose",
+      "_tgt": "docker",
+      "source": "docker",
+      "target": "docker_compose"
+    },
+    {
+      "relation": "defines image",
+      "confidence": "EXTRACTED",
+      "_src": "dockerfile",
+      "_tgt": "docker",
+      "source": "docker",
+      "target": "dockerfile"
+    },
+    {
+      "relation": "documents",
+      "confidence": "EXTRACTED",
+      "_src": "readme",
+      "_tgt": "component_lib",
+      "source": "component_lib",
+      "target": "readme"
+    },
+    {
+      "relation": "describes",
+      "confidence": "EXTRACTED",
+      "_src": "proj_summary",
+      "_tgt": "component_lib",
+      "source": "component_lib",
+      "target": "proj_summary"
+    },
+    {
+      "relation": "displays",
+      "confidence": "EXTRACTED",
+      "_src": "dashboard",
+      "_tgt": "analytics",
+      "source": "dashboard",
+      "target": "analytics"
+    },
+    {
+      "relation": "manages",
+      "confidence": "EXTRACTED",
+      "_src": "dashboard",
+      "_tgt": "link_management",
+      "source": "dashboard",
+      "target": "link_management"
+    },
+    {
+      "relation": "describes implementation",
+      "confidence": "EXTRACTED",
+      "_src": "proj_summary",
+      "_tgt": "dashboard",
+      "source": "dashboard",
+      "target": "proj_summary"
+    },
+    {
+      "relation": "compares",
+      "confidence": "EXTRACTED",
+      "_src": "hosting_analysis",
+      "_tgt": "railway",
+      "source": "hosting_analysis",
+      "target": "railway"
+    },
+    {
+      "relation": "compares",
+      "confidence": "EXTRACTED",
+      "_src": "hosting_analysis",
+      "_tgt": "aws",
+      "source": "hosting_analysis",
+      "target": "aws"
+    },
+    {
+      "relation": "compares",
+      "confidence": "EXTRACTED",
+      "_src": "hosting_analysis",
+      "_tgt": "digitalocean",
+      "source": "hosting_analysis",
+      "target": "digitalocean"
+    },
+    {
+      "relation": "compares",
+      "confidence": "EXTRACTED",
+      "_src": "hosting_analysis",
+      "_tgt": "cloudflare",
+      "source": "hosting_analysis",
+      "target": "cloudflare"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "ui_index",
+      "_tgt": "badge_component",
+      "source": "badge_component",
+      "target": "ui_index"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "ui_index",
+      "_tgt": "button_component",
+      "source": "button_component",
+      "target": "ui_index"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "error_boundary_component",
+      "_tgt": "button_component",
+      "source": "button_component",
+      "target": "error_boundary_component"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "error_page_component",
+      "_tgt": "button_component",
+      "source": "button_component",
+      "target": "error_page_component"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "modal_component",
+      "_tgt": "button_component",
+      "source": "button_component",
+      "target": "modal_component"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "ui_index",
+      "_tgt": "card_component",
+      "source": "card_component",
+      "target": "ui_index"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "error_boundary_component",
+      "_tgt": "card_component",
+      "source": "card_component",
+      "target": "error_boundary_component"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "error_page_component",
+      "_tgt": "card_component",
+      "source": "card_component",
+      "target": "error_page_component"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "ui_index",
+      "_tgt": "checkbox_component",
+      "source": "checkbox_component",
+      "target": "ui_index"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "ui_index",
+      "_tgt": "divider_component",
+      "source": "divider_component",
+      "target": "ui_index"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "ui_index",
+      "_tgt": "input_component",
+      "source": "input_component",
+      "target": "ui_index"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "form_field_component",
+      "_tgt": "input_component",
+      "source": "input_component",
+      "target": "form_field_component"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "ui_index",
+      "_tgt": "modal_component",
+      "source": "modal_component",
+      "target": "ui_index"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "ui_index",
+      "_tgt": "select_component",
+      "source": "select_component",
+      "target": "ui_index"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "form_field_component",
+      "_tgt": "select_component",
+      "source": "select_component",
+      "target": "form_field_component"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "ui_index",
+      "_tgt": "textarea_component",
+      "source": "textarea_component",
+      "target": "ui_index"
+    },
+    {
+      "relation": "uses",
+      "confidence": "EXTRACTED",
+      "_src": "form_field_component",
+      "_tgt": "textarea_component",
+      "source": "textarea_component",
+      "target": "form_field_component"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "ui_index",
+      "_tgt": "spinner_component",
+      "source": "spinner_component",
+      "target": "ui_index"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "ui_index",
+      "_tgt": "skeleton_component",
+      "source": "skeleton_component",
+      "target": "ui_index"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "ui_index",
+      "_tgt": "toast_component",
+      "source": "toast_component",
+      "target": "ui_index"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "ui_index",
+      "_tgt": "error_boundary_component",
+      "source": "error_boundary_component",
+      "target": "ui_index"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "ui_index",
+      "_tgt": "error_page_component",
+      "source": "error_page_component",
+      "target": "ui_index"
+    },
+    {
+      "relation": "exports",
+      "confidence": "EXTRACTED",
+      "_src": "ui_index",
+      "_tgt": "form_field_component",
+      "source": "form_field_component",
+      "target": "ui_index"
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "_src": "form_field_component",
+      "_tgt": "validation_module",
+      "source": "form_field_component",
+      "target": "validation_module"
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "_src": "links_module",
+      "_tgt": "types_module",
+      "source": "types_module",
+      "target": "links_module"
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "_src": "analytics_module",
+      "_tgt": "types_module",
+      "source": "types_module",
+      "target": "analytics_module"
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "_src": "links_module",
+      "_tgt": "supabase_module",
+      "source": "supabase_module",
+      "target": "links_module"
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "_src": "analytics_module",
+      "_tgt": "supabase_module",
+      "source": "supabase_module",
+      "target": "analytics_module"
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "_src": "auth_module",
+      "_tgt": "supabase_module",
+      "source": "supabase_module",
+      "target": "auth_module"
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "_src": "use_form_hook",
+      "_tgt": "validation_module",
+      "source": "validation_module",
+      "target": "use_form_hook"
+    },
+    {
+      "relation": "complements",
+      "confidence": "INFERRED",
+      "_src": "shortener_module",
+      "_tgt": "validation_module",
+      "source": "validation_module",
+      "target": "shortener_module"
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "_src": "links_module",
+      "_tgt": "shortener_module",
+      "source": "shortener_module",
+      "target": "links_module"
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "_src": "analytics_module",
+      "_tgt": "utils_module",
+      "source": "analytics_module",
+      "target": "utils_module"
+    }
+  ]
+}

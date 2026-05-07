@@ -60,13 +60,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Mobile Top Bar */}
       <header className="lg:hidden sticky top-0 z-40 glass-panel border-b border-outline-variant/60">
-        <div className="grid grid-cols-3 items-center px-6 py-4">
+        <div className="grid grid-cols-3 items-center px-4 py-3 sm:px-6 sm:py-4">
           <button
-            className="text-on-surface-variant hover:text-primary transition-colors"
+            className="text-on-surface-variant hover:text-primary transition-colors p-2 -ml-2 active:scale-95 transition-transform"
             onClick={() => setMobileMenuOpen((prev) => !prev)}
             aria-label="Toggle menu"
           >
-            <span className="material-symbols-outlined">menu</span>
+            <span className="material-symbols-outlined text-2xl">menu</span>
           </button>
           <span className="justify-self-center text-xl font-black tracking-tight">LinkShrink</span>
           <span />
@@ -175,7 +175,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
       {/* Main Content */}
       <main className="flex-1 lg:ml-64 px-6 py-8 lg:px-10 lg:py-10 relative z-10">
-        <header className="hidden lg:flex items-center justify-between mb-8">
+        <header className="hidden lg:sticky lg:top-0 lg:z-30 lg:flex items-center justify-between mb-8 lg:bg-gradient-to-b lg:from-surface-container lg:to-transparent lg:pb-4 lg:-mx-10 lg:px-10 lg:pt-10">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-on-surface-variant mb-2">Current section</p>
             <h2 className="text-h2 font-semibold text-on-surface tracking-tight">{activeLabel}</h2>
