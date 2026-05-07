@@ -13,7 +13,6 @@ export default function SettingsPage() {
   const [apiKeyVisible, setApiKeyVisible] = useState(false);
   const [isLoadingProfile, setIsLoadingProfile] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
-  const [isLoadingKey, setIsLoadingKey] = useState(true);
   const [isRotatingKey, setIsRotatingKey] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [email, setEmail] = useState('');
@@ -56,7 +55,7 @@ export default function SettingsPage() {
           setEmail(data.email || '');
           setFullName(data.name || '');
         }
-      } catch (loadError) {
+      } catch (_loadError) {
         if (isActive) {
           setError('Failed to load profile');
         }
@@ -96,7 +95,7 @@ export default function SettingsPage() {
           setEmailNotifications(Boolean(data.email_notifications));
           setProductUpdates(Boolean(data.product_updates));
         }
-      } catch (prefLoadError) {
+      } catch (_prefLoadError) {
         if (isActive) {
           setPrefError('Failed to load preferences');
         }
@@ -177,7 +176,7 @@ export default function SettingsPage() {
       const data = await res.json();
       setFullName(data.name || '');
       setSuccessMessage('Profile updated');
-    } catch (saveError) {
+    } catch (_saveError) {
       setError('Failed to update profile');
     } finally {
       setIsSaving(false);
@@ -218,7 +217,7 @@ export default function SettingsPage() {
       setApiKeyLast4(data.last4 || '');
       setApiKeyVisible(true);
       setApiKeyMessage('New API key generated');
-    } catch (rotateError) {
+    } catch (_rotateError) {
       setApiKeyError('Failed to create API key');
     } finally {
       setIsRotatingKey(false);
@@ -247,7 +246,7 @@ export default function SettingsPage() {
       anchor.click();
       anchor.remove();
       URL.revokeObjectURL(url);
-    } catch (exportError) {
+    } catch (_exportError) {
       setApiKeyError('Failed to export data');
     } finally {
       setIsExporting(false);
@@ -267,7 +266,7 @@ export default function SettingsPage() {
       }
 
       await signOut({ callbackUrl: '/' });
-    } catch (deleteAccountError) {
+    } catch (_deleteAccountError) {
       setDeleteError('Failed to delete account');
     } finally {
       setIsDeletingAccount(false);
@@ -297,7 +296,7 @@ export default function SettingsPage() {
       }
 
       setPrefMessage('Preferences saved');
-    } catch (prefSaveError) {
+    } catch (_prefSaveError) {
       setPrefError('Failed to save preferences');
     } finally {
       setIsSavingPreferences(false);

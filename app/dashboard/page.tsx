@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { Card, CardContent } from '@/components/ui/Card';
@@ -92,7 +93,7 @@ export default function DashboardHome() {
         const linksData = await linksRes.json();
         setRecentLinks(linksData.links);
       }
-    } catch (error) {
+    } catch (_error) {
       setCreateError('Failed to create link');
     } finally {
       setIsCreating(false);
@@ -243,10 +244,12 @@ export default function DashboardHome() {
             </div>
             {createdQr && (
               <div className="flex justify-center">
-                <img
+                <Image
                   src={createdQr}
                   alt="QR code"
-                  className="h-28 w-28 rounded-lg border border-outline-variant"
+                  width={112}
+                  height={112}
+                  className="rounded-lg border border-outline-variant"
                 />
               </div>
             )}
