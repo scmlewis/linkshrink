@@ -1,7 +1,6 @@
 'use client';
 
 import { use, useEffect, useMemo, useState } from 'react';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
@@ -89,6 +88,11 @@ export default function LinkDetailPage({ params }: LinkDetailPageProps) {
     }
   };
 
+  const handleOpenShortUrl = () => {
+    if (!shortUrl || typeof window === 'undefined') return;
+    window.open(shortUrl, '_blank', 'noopener,noreferrer');
+  };
+
   if (isLoading) {
     return <div className="text-center py-12">Loading...</div>;
   }
@@ -134,16 +138,21 @@ export default function LinkDetailPage({ params }: LinkDetailPageProps) {
         <CardContent className="space-y-4">
           <div>
             <p className="text-sm text-on-surface-variant">Original URL</p>
-            <Link href={link.original_url} className="text-secondary break-all" target="_blank">
+            <a href={link.original_url} className="text-secondary break-all" target="_blank" rel="noopener noreferrer">
               {link.original_url}
-            </Link>
+            </a>
           </div>
           <div>
             <p className="text-sm text-on-surface-variant">Short URL</p>
             <div className="flex flex-wrap items-center gap-3">
-              <Link href={shortUrl} className="text-primary break-all" target="_blank">
+              <button
+                type="button"
+                onClick={handleOpenShortUrl}
+                className="text-primary break-all text-left"
+                title="Open short link"
+              >
                 {shortUrl}
-              </Link>
+              </button>
               <Button size="sm" variant="outline" onClick={handleCopy}>
                 {copied ? 'Copied' : 'Copy'}
               </Button>

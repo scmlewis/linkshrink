@@ -108,6 +108,12 @@ export default function DashboardHome() {
     }
   };
 
+  const handleOpenShortUrl = (shortCode: string) => {
+    if (typeof window === 'undefined') return;
+    const shortUrl = buildShortUrl(shortCode, window.location.origin);
+    window.open(shortUrl, '_blank', 'noopener,noreferrer');
+  };
+
   const handleEditLink = (link: LinkType) => {
     setEditingLink(link);
     setEditNickname(link.nickname || '');
@@ -299,13 +305,14 @@ export default function DashboardHome() {
                       <span className="hidden md:inline">Created {formatDate(link.created_at)}</span>
                       <span className="md:hidden">{formatDate(link.created_at)}</span>
                       <span className="hidden md:inline">•</span>
-                      <Link
-                        href={buildShortUrl(link.short_code, typeof window !== 'undefined' ? window.location.origin : '')}
-                        className="text-surface-tint truncate max-w-full"
-                        target="_blank"
+                      <button
+                        type="button"
+                        onClick={() => handleOpenShortUrl(link.short_code)}
+                        className="text-surface-tint truncate max-w-full text-left"
+                        title="Open short link"
                       >
                         {link.short_code}
-                      </Link>
+                      </button>
                     </div>
                   </div>
 
