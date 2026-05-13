@@ -2,26 +2,6 @@ import NextAuth, { type NextAuthConfig } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { supabaseAdmin } from './supabase';
 
-function getBaseUrl(): string {
-  // In production, use NEXTAUTH_URL if explicitly set
-  if (process.env.NEXTAUTH_URL) {
-    return process.env.NEXTAUTH_URL;
-  }
-
-  // Use NEXT_PUBLIC_APP_URL as fallback (preferred)
-  if (process.env.NEXT_PUBLIC_APP_URL) {
-    return process.env.NEXT_PUBLIC_APP_URL;
-  }
-
-  // Development fallback
-  if (process.env.NODE_ENV === 'development') {
-    return 'http://localhost:3000';
-  }
-
-  // Should not reach here in production
-  throw new Error('NEXTAUTH_URL or NEXT_PUBLIC_APP_URL must be set in production');
-}
-
 export const authOptions: NextAuthConfig = {
   trustHost: true,
   basePath: '/api/auth',
@@ -117,11 +97,15 @@ export const authOptions: NextAuthConfig = {
     },
 
     async redirect({ url, baseUrl }) {
-      // Ensure redirects use the proper base URL
-      if (url.startsWith('/')) return `${baseUrl}${url}`;
-      if (url.startsWith(baseUrl)) return url;
-      // Default to home
-      return baseUrl;
+      // Use NEXT_PUBLIC_APP_URL if available (should be set in Vercel env)
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL || baseUrl;
+      
+      // Only allow relative URLs or URLs to the configured app URL
+      if (url.startsWith('/')) return `${appUrl}${url}`;
+      if (url.startsWith(appUrl)) return url;
+      
+      // Security: reject redirects to other domains
+      return appUrl;
     },
   },
 
