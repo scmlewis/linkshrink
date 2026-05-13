@@ -8,6 +8,7 @@ import { Checkbox } from '@/components/ui/Checkbox';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Modal } from '@/components/ui/Modal';
 import { copyToClipboard } from '@/lib/utils';
+import { cachedFetch, invalidateCache } from '@/lib/fetchCache';
 
 export default function SettingsPage() {
   const [apiKeyVisible, setApiKeyVisible] = useState(false);
@@ -42,16 +43,7 @@ export default function SettingsPage() {
       setError('');
 
       try {
-        const res = await fetch('/api/user');
-        if (!res.ok) {
-          const data = await res.json().catch(() => ({}));
-          if (isActive) {
-            setError(data.error || 'Failed to load profile');
-          }
-          return;
-        }
-
-        const data = await res.json();
+        const data = await cachedFetch<{ email?: string; name?: string }>('/api/user');
         if (isActive) {
           setEmail(data.email || '');
           setFullName(data.name || '');
@@ -82,16 +74,9 @@ export default function SettingsPage() {
       setPrefError('');
 
       try {
-        const res = await fetch('/api/preferences');
-        if (!res.ok) {
-          const data = await res.json().catch(() => ({}));
-          if (isActive) {
-            setPrefError(data.error || 'Failed to load preferences');
-          }
-          return;
-        }
-
-        const data = await res.json();
+        const data = await cachedFetch<{ email_notifications?: boolean; product_updates?: boolean }>(
+          '/api/preferences'
+        );
         if (isActive) {
           setEmailNotifications(Boolean(data.email_notifications));
           setProductUpdates(Boolean(data.product_updates));
@@ -122,16 +107,7 @@ export default function SettingsPage() {
       setApiKeyError('');
 
       try {
-        const res = await fetch('/api/api-keys');
-        if (!res.ok) {
-          const data = await res.json().catch(() => ({}));
-          if (isActive) {
-            setApiKeyError(data.error || 'Failed to load API keys');
-          }
-          return;
-        }
-
-        const data = await res.json();
+        const data = await cachedFetch<{ keys?: Array<{ last4?: string }> }>('/api/api-keys');
         if (isActive) {
           // Get the first key (default key)
           if (data.keys && data.keys.length > 0) {
@@ -176,6 +152,7 @@ export default function SettingsPage() {
 
       const data = await res.json();
       setFullName(data.name || '');
+      invalidateCache('/api/user');
       setSuccessMessage('Profile updated');
     } catch {
       setError('Failed to update profile');
@@ -217,6 +194,7 @@ export default function SettingsPage() {
       setApiKey(data.key || '');
       setApiKeyLast4(data.last4 || '');
       setApiKeyVisible(true);
+      invalidateCache('/api/api-keys');
       setApiKeyMessage('New API key generated');
     } catch {
       setApiKeyError('Failed to create API key');
@@ -296,6 +274,7 @@ export default function SettingsPage() {
         return;
       }
 
+      invalidateCache('/api/preferences');
       setPrefMessage('Preferences saved');
     } catch {
       setPrefError('Failed to save preferences');

@@ -6,6 +6,7 @@ import { Select } from '@/components/ui/Select';
 import { Spinner } from '@/components/ui/Spinner';
 import { AnalyticsSummary } from '@/lib/types';
 import { formatNumber } from '@/lib/utils';
+import { cachedFetch } from '@/lib/fetchCache';
 
 export default function AnalyticsPage() {
   const [summary, setSummary] = useState<AnalyticsSummary | null>(null);
@@ -17,12 +18,8 @@ export default function AnalyticsPage() {
       setIsLoading(true);
       const params = new URLSearchParams({ range: dateRange });
 
-      const summaryRes = await fetch(`/api/analytics?${params}`);
-      if (summaryRes.ok) {
-        const summaryData = await summaryRes.json();
-        setSummary(summaryData);
-      }
-
+      const summaryData = await cachedFetch<AnalyticsSummary>(`/api/analytics?${params}`);
+      setSummary(summaryData);
     } catch (error) {
       console.error('Failed to fetch analytics:', error);
     } finally {

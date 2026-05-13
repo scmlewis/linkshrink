@@ -8,6 +8,7 @@ import { Modal } from '@/components/ui/Modal';
 import { Spinner } from '@/components/ui/Spinner';
 import { useToast } from '@/components/ui/Toast';
 import { formatDate } from '@/lib/utils';
+import { cachedFetch, invalidateCache } from '@/lib/fetchCache';
 
 interface ApiKey {
   id: string;
@@ -31,11 +32,8 @@ export default function ApiKeysPage() {
   const fetchApiKeys = useCallback(async () => {
     try {
       setIsLoading(true);
-      const res = await fetch('/api/api-keys');
-      if (res.ok) {
-        const data = await res.json();
-        setApiKeys(data.keys || []);
-      }
+      const data = await cachedFetch<{ keys?: ApiKey[] }>('/api/api-keys');
+      setApiKeys(data.keys || []);
     } catch (error) {
       console.error('Failed to fetch API keys:', error);
       addToast('Failed to load API keys', 'error');
@@ -67,6 +65,7 @@ export default function ApiKeysPage() {
         const data = await res.json();
         setCreatedKey(data);
         setKeyName('');
+        invalidateCache('/api/api-keys');
         await fetchApiKeys();
         addToast('API key created successfully', 'success');
       } else {
@@ -89,6 +88,7 @@ export default function ApiKeysPage() {
       if (res.ok) {
         setApiKeys(apiKeys.filter((k) => k.id !== keyId));
         setShowDeleteConfirm(null);
+        invalidateCache('/api/api-keys');
         addToast('API key deleted', 'success');
       } else {
         addToast('Failed to delete API key', 'error');
