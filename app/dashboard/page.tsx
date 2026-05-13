@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/Button';
 import { Modal } from '@/components/ui/Modal';
 import { buildShortUrl, copyToClipboard, formatNumber, formatDate } from '@/lib/utils';
 import { AnalyticsSummary, Link as LinkType } from '@/lib/types';
+import { cachedFetch, invalidateCache } from '@/lib/fetchCache';
 
 const summaryLabels = [
   { key: 'total_clicks', label: 'Total clicks', icon: 'ads_click' },
@@ -35,19 +36,13 @@ export default function DashboardHome() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch analytics summary
-        const summaryRes = await fetch('/api/analytics');
-        if (summaryRes.ok) {
-          const summaryData = await summaryRes.json();
-          setSummary(summaryData);
-        }
+        // Fetch analytics summary using cache
+        const summaryData = await cachedFetch<AnalyticsSummary>('/api/analytics');
+        setSummary(summaryData);
 
-        // Fetch recent links
-        const linksRes = await fetch('/api/links?page=1&limit=5');
-        if (linksRes.ok) {
-          const linksData = await linksRes.json();
-          setRecentLinks(linksData.links);
-        }
+        // Fetch recent links using cache
+        const linksData = await cachedFetch<{ links: LinkType[] }>('/api/links?page=1&limit=5');
+        setRecentLinks(linksData.links);
       } catch (error) {
         console.error('Failed to fetch data:', error);
       } finally {
@@ -82,17 +77,18 @@ export default function DashboardHome() {
       setLongUrl('');
       setNickname('');
 
+      // Invalidate cache for links since we just created a new one
+      invalidateCache('/api/links');
+
       const qrRes = await fetch(`/api/qr/${data.id}`);
       if (qrRes.ok) {
         const qrData = await qrRes.json();
         setCreatedQr(qrData.qrCode || '');
       }
 
-      const linksRes = await fetch('/api/links?page=1&limit=5');
-      if (linksRes.ok) {
-        const linksData = await linksRes.json();
-        setRecentLinks(linksData.links);
-      }
+      // Fetch fresh recent links
+      const linksData = await cachedFetch<{ links: LinkType[] }>('/api/links?page=1&limit=5');
+      setRecentLinks(linksData.links);
     } catch {
       setCreateError('Failed to create link');
     } finally {

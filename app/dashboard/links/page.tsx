@@ -11,6 +11,7 @@ import { Spinner } from '@/components/ui/Spinner';
 import { Modal } from '@/components/ui/Modal';
 import { Link as LinkType } from '@/lib/types';
 import { formatDate, formatNumber, copyToClipboard } from '@/lib/utils';
+import { cachedFetch, invalidateCache } from '@/lib/fetchCache';
 
 export default function LinksPage() {
   const router = useRouter();
@@ -54,12 +55,11 @@ export default function LinksPage() {
       if (searchQuery) params.append('search', searchQuery);
       if (filterTag) params.append('tag', filterTag);
 
-      const res = await fetch(`/api/links?${params}`);
-      if (res.ok) {
-        const data = await res.json();
-        setLinks(data.links);
-        setTotalPages(data.pagination?.totalPages || 1);
-      }
+      const data = await cachedFetch<{ links: LinkType[]; pagination?: { totalPages: number } }>(
+        `/api/links?${params}`
+      );
+      setLinks(data.links);
+      setTotalPages(data.pagination?.totalPages || 1);
     } catch (error) {
       console.error('Failed to fetch links:', error);
     } finally {
@@ -102,6 +102,8 @@ export default function LinksPage() {
         setFormData({ originalUrl: '', customAlias: '', title: '', description: '', tags: '' });
         setShowCreateForm(false);
         setCurrentPage(1);
+        // Invalidate cache and refetch
+        invalidateCache('/api/links');
         fetchLinks();
       }
     } catch {
@@ -131,6 +133,8 @@ export default function LinksPage() {
       if (res.ok) {
         setLinks(links.filter((l) => l.id !== deleteConfirmLink.id));
         setDeleteConfirmLink(null);
+        // Invalidate cache for links
+        invalidateCache('/api/links');
       }
     } catch (error) {
       console.error('Failed to delete link:', error);
