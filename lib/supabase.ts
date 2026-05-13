@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
@@ -8,7 +9,7 @@ const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const url = supabaseUrl || 'https://placeholder.supabase.co';
 const anonKey = supabaseAnonKey || 'placeholder-key';
 
-function createMissingCredentialsProxy(clientName: 'supabase' | 'supabaseAdmin', cause: unknown) {
+function createMissingCredentialsProxy(clientName: 'supabase' | 'supabaseAdmin', cause: unknown): SupabaseClient {
   const message =
     'Missing Supabase URL or Anon Key. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in your deployment environment.';
 
@@ -17,13 +18,13 @@ function createMissingCredentialsProxy(clientName: 'supabase' | 'supabaseAdmin',
   }
 
   return new Proxy(
-    {},
+    {} as SupabaseClient,
     {
       get() {
         throw new Error(message);
       },
     }
-  );
+  ) as SupabaseClient;
 }
 
 function createSafeClient(clientName: 'supabase' | 'supabaseAdmin', key: string) {

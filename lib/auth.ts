@@ -2,7 +2,30 @@ import NextAuth, { type NextAuthConfig } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { supabaseAdmin } from './supabase';
 
+function getBaseUrl(): string {
+  // In production, use NEXTAUTH_URL if explicitly set
+  if (process.env.NEXTAUTH_URL) {
+    return process.env.NEXTAUTH_URL;
+  }
+
+  // Use NEXT_PUBLIC_APP_URL as fallback (preferred)
+  if (process.env.NEXT_PUBLIC_APP_URL) {
+    return process.env.NEXT_PUBLIC_APP_URL;
+  }
+
+  // Development fallback
+  if (process.env.NODE_ENV === 'development') {
+    return 'http://localhost:3000';
+  }
+
+  // Should not reach here in production
+  throw new Error('NEXTAUTH_URL or NEXT_PUBLIC_APP_URL must be set in production');
+}
+
 export const authOptions: NextAuthConfig = {
+  trustHost: true,
+  basePath: '/api/auth',
+
   providers: [
     CredentialsProvider({
       credentials: {
@@ -91,6 +114,14 @@ export const authOptions: NextAuthConfig = {
         session.user.email = token.email as string;
       }
       return session;
+    },
+
+    async redirect({ url, baseUrl }) {
+      // Ensure redirects use the proper base URL
+      if (url.startsWith('/')) return `${baseUrl}${url}`;
+      if (url.startsWith(baseUrl)) return url;
+      // Default to home
+      return baseUrl;
     },
   },
 
