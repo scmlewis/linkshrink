@@ -42,6 +42,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     }
   }, [status, router]);
 
+  // Scroll to top when pathname changes
+  useEffect(() => {
+    const mainContent = document.querySelector('main');
+    if (mainContent) {
+      mainContent.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [pathname]);
+
   if (status === 'loading') {
     return (
       <div className="min-h-screen page-gradient flex items-center justify-center">
@@ -177,7 +185,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 lg:ml-64 px-6 py-8 lg:px-10 lg:py-10 relative z-10">
+      <main className="flex-1 lg:ml-64 px-6 py-8 lg:px-10 lg:py-10 relative z-10 overflow-y-auto">
         <header className="hidden lg:sticky lg:top-0 lg:z-30 lg:flex items-center justify-between mb-8 lg:bg-gradient-to-b lg:from-surface-container lg:to-transparent lg:pb-4 lg:-mx-10 lg:px-10 lg:pt-10">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-on-surface-variant mb-2">Current section</p>
