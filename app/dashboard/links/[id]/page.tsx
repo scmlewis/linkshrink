@@ -4,6 +4,7 @@ import { use, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { ExternalLink } from '@/components/ui/ExternalLink';
 import { Link as LinkType, LinkAnalytics } from '@/lib/types';
 import { buildShortUrl, copyToClipboard, formatDate, formatNumber } from '@/lib/utils';
 
@@ -19,12 +20,23 @@ export default function LinkDetailPage({ params }: LinkDetailPageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   const shortUrl = useMemo(() => {
     if (!link) return '';
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
     return buildShortUrl(link.short_code, baseUrl);
   }, [link]);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     let isActive = true;
@@ -88,11 +100,6 @@ export default function LinkDetailPage({ params }: LinkDetailPageProps) {
     }
   };
 
-  const handleOpenShortUrl = () => {
-    if (!shortUrl || typeof window === 'undefined') return;
-    window.open(shortUrl, '_blank', 'noopener,noreferrer');
-  };
-
   if (isLoading) {
     return <div className="text-center py-12">Loading...</div>;
   }
@@ -138,21 +145,21 @@ export default function LinkDetailPage({ params }: LinkDetailPageProps) {
         <CardContent className="space-y-4">
           <div>
             <p className="text-sm text-on-surface-variant">Original URL</p>
-            <a href={link.original_url} className="text-secondary break-all" target="_blank" rel="noopener noreferrer">
+            <ExternalLink href={link.original_url} className="text-secondary break-all" rel="noopener noreferrer">
               {link.original_url}
-            </a>
+            </ExternalLink>
           </div>
           <div>
             <p className="text-sm text-on-surface-variant">Short URL</p>
             <div className="flex flex-wrap items-center gap-3">
-              <button
-                type="button"
-                onClick={handleOpenShortUrl}
+              <ExternalLink
+                href={shortUrl}
                 className="text-primary break-all text-left"
                 title="Open short link"
+                forceNewTab={!isMobile}
               >
                 {shortUrl}
-              </button>
+              </ExternalLink>
               <Button size="sm" variant="outline" onClick={handleCopy}>
                 {copied ? 'Copied' : 'Copy'}
               </Button>

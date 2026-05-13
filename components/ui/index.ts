@@ -2,6 +2,7 @@ export { Button } from './Button';
 export { Card, CardHeader, CardTitle, CardContent, CardDescription, CardFooter } from './Card';
 export { Input } from './Input';
 export { Modal } from './Modal';
+export { ExternalLink } from './ExternalLink';
 export { Textarea } from './Textarea';
 export { Select } from './Select';
 export type { SelectOption } from './Select';

@@ -59,7 +59,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="bg-glow" />
 
       {/* Mobile Top Bar */}
-      <header className="lg:hidden sticky top-0 z-40 glass-panel border-b border-outline-variant/60">
+      <header className="lg:hidden fixed top-0 left-0 right-0 z-40 glass-panel border-b border-outline-variant/60 w-screen">
         <div className="grid grid-cols-3 items-center px-4 py-3 sm:px-6 sm:py-4">
           <button
             className="text-on-surface-variant hover:text-primary transition-colors p-2 -ml-2 active:scale-95 transition-transform"
@@ -72,6 +72,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <span />
         </div>
       </header>
+
+      {/* Mobile content padding to account for fixed header */}
+      <div className="lg:hidden h-[4.5rem] sm:h-20" />
 
       {mobileMenuOpen && (
         <div className="lg:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)}>
