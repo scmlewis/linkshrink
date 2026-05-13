@@ -1,11 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import LinksPage from '@/app/dashboard/links/page';
+import LinksPage from '@/app/dashboard/LinksPage';
 
 const pushMock = vi.fn();
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: pushMock }),
+  useSearchParams: () => new URLSearchParams(),
 }));
 
 function createDeferred<T>() {

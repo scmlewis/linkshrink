@@ -16,6 +16,7 @@ const useSessionMock = vi.fn();
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: pushMock }),
+  useSearchParams: () => new URLSearchParams(),
 }));
 
 vi.mock('next-auth/react', () => ({

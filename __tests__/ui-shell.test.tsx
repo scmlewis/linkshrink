@@ -19,6 +19,7 @@ const pathnameMock = vi.fn();
 vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: pushMock }),
   usePathname: () => pathnameMock(),
+  useSearchParams: () => new URLSearchParams('tab=links'),
 }));
 
 vi.mock('next-auth/react', () => ({
