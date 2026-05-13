@@ -97,13 +97,21 @@ export const authOptions: NextAuthConfig = {
     },
 
     async redirect({ url, baseUrl }) {
-      // Use NEXT_PUBLIC_APP_URL if available (should be set in Vercel env)
-      const appUrl = process.env.NEXT_PUBLIC_APP_URL || baseUrl;
-      
+      // Priority order for determining app URL:
+      // 1. NEXTAUTH_URL (most reliable in production)
+      // 2. NEXT_PUBLIC_APP_URL (fallback)
+      // 3. NEXT_PUBLIC_SHORT_URL_BASE (alternative fallback)
+      // 4. baseUrl from request (last resort)
+      const appUrl =
+        process.env.NEXTAUTH_URL ||
+        process.env.NEXT_PUBLIC_APP_URL ||
+        process.env.NEXT_PUBLIC_SHORT_URL_BASE ||
+        baseUrl;
+
       // Only allow relative URLs or URLs to the configured app URL
       if (url.startsWith('/')) return `${appUrl}${url}`;
       if (url.startsWith(appUrl)) return url;
-      
+
       // Security: reject redirects to other domains
       return appUrl;
     },
