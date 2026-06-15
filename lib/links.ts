@@ -27,7 +27,7 @@ export async function createLink(
     }
 
     // Determine short code
-    let shortCode = options?.customAlias || generateShortCode(6);
+    const shortCode = options?.customAlias || generateShortCode(6);
 
     // Create link with retry on conflict
     let result = await supabaseAdmin
@@ -48,7 +48,7 @@ export async function createLink(
       .single();
 
     // If custom alias conflicts, generate a new one and retry
-    if (result.error && options?.customAlias && (result.error as any).code === '23505') {
+    if (result.error && options?.customAlias && result.error.code === '23505') {
       const newShortCode = generateShortCode(6);
       result = await supabaseAdmin
         .from('links')

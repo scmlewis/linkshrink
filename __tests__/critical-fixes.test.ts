@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { GET } from '@/app/[shortCode]/route';
-import { supabase, supabaseAdmin } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 
 vi.mock('@/lib/supabase', () => ({
   supabase: {
@@ -13,7 +13,6 @@ vi.mock('@/lib/supabase', () => ({
 }));
 
 const fromMock = vi.mocked(supabase.from as unknown as (table: string) => unknown);
-const adminFromMock = vi.mocked(supabaseAdmin.from as unknown as (table: string) => unknown);
 
 beforeEach(() => {
   vi.resetAllMocks();
