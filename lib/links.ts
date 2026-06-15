@@ -26,32 +26,10 @@ export async function createLink(
       };
     }
 
-    // Generate short code
-    let shortCode = generateShortCode(6);
-    let attempts = 0;
-    const maxAttempts = 5;
+    // Determine short code
+    let shortCode = options?.customAlias || generateShortCode(6);
 
-    // Ensure short code is unique
-    while (attempts < maxAttempts) {
-      const { data: existing } = await supabaseAdmin
-        .from('links')
-        .select('id')
-        .eq('short_code', shortCode)
-        .single();
-
-      if (!existing) break;
-      shortCode = generateShortCode(6);
-      attempts++;
-    }
-
-    if (attempts === maxAttempts) {
-      return {
-        success: false,
-        error: 'Failed to generate unique short code',
-      };
-    }
-
-    // Create link
+    // Create link with retry on conflict
     const { data: link, error } = await supabaseAdmin
       .from('links')
       .insert([
@@ -67,7 +45,35 @@ export async function createLink(
         },
       ])
       .select()
-      .single();
+      .single()
+      .catch(async (insertError) => {
+        // If custom alias conflicts, generate a new one
+        if (options?.customAlias && insertError.code === '23505') {
+          const newShortCode = generateShortCode(6);
+          const { data: retryLink, error: retryError } = await supabaseAdmin
+            .from('links')
+            .insert([
+              {
+                user_id: userId,
+                short_code: newShortCode,
+                original_url: normalizedUrl,
+                custom_alias: options?.customAlias,
+                title: options?.title,
+                nickname: options?.nickname,
+                description: options?.description,
+                is_active: true,
+              },
+            ])
+            .select()
+            .single();
+          
+          if (retryError) {
+            return { data: null, error: retryError };
+          }
+          return { data: retryLink, error: null };
+        }
+        return { data: null, error: insertError };
+      });
 
     if (error) {
       return {
@@ -238,13 +244,7 @@ export async function updateLink(
  */
 export async function deleteLink(linkId: string): Promise<ApiResponse<null>> {
   try {
-    // Delete associated tags first
-    await supabaseAdmin.from('tags').delete().eq('link_id', linkId);
-
-    // Delete associated analytics
-    await supabaseAdmin.from('analytics').delete().eq('link_id', linkId);
-
-    // Delete the link
+    // Delete the link (database has ON DELETE CASCADE for tags and analytics)
     const { error } = await supabaseAdmin.from('links').delete().eq('id', linkId);
 
     if (error) {

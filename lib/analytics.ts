@@ -16,35 +16,23 @@ export async function recordClick(
   try {
     const { device_type, os, browser } = parseUserAgent(request.user_agent || '');
 
-    // Try to get geo data (optional)
+    // Try to get geo data (optional) - run in background
     let country = 'Unknown';
     let city = 'Unknown';
 
-    try {
-      // Using ipapi.co for geolocation (no key required)
-      if (request.ip_address) {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 3000); // 3 second timeout
-        
-        try {
-          const geoResponse = await fetch(`https://ipapi.co/${request.ip_address}/json/`, {
-            signal: controller.signal,
-          });
-          clearTimeout(timeoutId);
-
-          if (geoResponse.ok) {
-            const geoData = await geoResponse.json();
-            country = geoData.country_name || 'Unknown';
-            city = geoData.city || 'Unknown';
-          }
-        } catch {
-          clearTimeout(timeoutId);
-          // Silently fail geo lookup - not critical for recording click
+    if (request.ip_address) {
+      const geoPromise = fetch(`https://ipapi.co/${request.ip_address}/json/`).then(async (geoResponse) => {
+        if (geoResponse.ok) {
+          const geoData = await geoResponse.json();
+          country = geoData.country_name || 'Unknown';
+          city = geoData.city || 'Unknown';
         }
-      }
-    } catch (e) {
-      // Silently fail geo lookup - not critical for recording click
-      console.debug('Geo lookup failed:', e);
+      }).catch(() => {
+        // Silently fail geo lookup - not critical for recording click
+      });
+      
+      // Don't await geo lookup to avoid blocking
+      geoPromise.catch(() => {});
     }
 
     const { data: record, error } = await supabaseAdmin

@@ -38,8 +38,8 @@ export async function GET(
       incrementClickCount(link.id),
     ]);
 
-    // Redirect to original URL
-    return NextResponse.redirect(link.original_url, { status: 301 });
+    // Redirect to original URL (302 to allow tracking on repeat visits)
+    return NextResponse.redirect(link.original_url, { status: 302 });
   } catch (error) {
     console.error('Error in redirect handler:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

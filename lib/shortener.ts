@@ -8,9 +8,11 @@ const BASE = ALPHABET.length;
  * @returns A random short code string
  */
 export function generateShortCode(length: number = 6): string {
+  const array = new Uint32Array(length);
+  crypto.getRandomValues(array);
   let shortCode = '';
   for (let i = 0; i < length; i++) {
-    shortCode += ALPHABET.charAt(Math.floor(Math.random() * BASE));
+    shortCode += ALPHABET[array[i] % BASE];
   }
   return shortCode;
 }
