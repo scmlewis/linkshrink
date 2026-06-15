@@ -266,7 +266,7 @@ export default function DashboardHome() {
             <h2 className="text-h2 font-semibold text-on-surface tracking-tight">Recent Links</h2>
           </div>
           <Link
-            href="/dashboard/links"
+            href="/dashboard?tab=links"
             className="text-primary text-xs uppercase tracking-widest flex items-center gap-1"
           >
             View All <span className="material-symbols-outlined text-sm">chevron_right</span>

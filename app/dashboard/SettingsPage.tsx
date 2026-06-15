@@ -161,6 +161,14 @@ export default function SettingsPage() {
     }
   };
 
+  const handleToggleKeyVisibility = () => {
+    if (!apiKey) {
+      setApiKeyError('Regenerate your API key to view it.');
+      return;
+    }
+    setApiKeyVisible(!apiKeyVisible);
+  };
+
   const handleCopyKey = async () => {
     if (!apiKey) {
       setApiKeyError('Regenerate your API key to copy it.');
@@ -344,13 +352,12 @@ export default function SettingsPage() {
             />
             <Button
               variant="outline"
-              onClick={() => setApiKeyVisible(!apiKeyVisible)}
-              disabled={!apiKey}
+              onClick={handleToggleKeyVisibility}
             >
               <span className="material-symbols-outlined">visibility</span>
               {apiKeyVisible ? 'Hide' : 'Show'}
             </Button>
-            <Button variant="outline" onClick={handleCopyKey} disabled={!apiKey}>
+            <Button variant="outline" onClick={handleCopyKey}>
               <span className="material-symbols-outlined">content_copy</span>
               Copy
             </Button>

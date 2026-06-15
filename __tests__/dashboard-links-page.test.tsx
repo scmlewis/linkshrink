@@ -71,7 +71,7 @@ describe('dashboard links page', () => {
     expect(screen.getAllByText('docs').length).toBe(2);
     expect(screen.getAllByText('product').length).toBe(2);
     expect(screen.getAllByText('42').length).toBe(2);
-    expect(fetchMock).toHaveBeenCalledWith('/api/links?page=1&limit=10&sort=created');
+    expect(fetchMock).toHaveBeenCalledWith('/api/links?page=1&limit=10&sort=created', undefined);
   });
 
   it('opens and closes the create form from the header action', async () => {

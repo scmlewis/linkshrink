@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Card, CardContent } from '@/components/ui/Card';
 import { Select } from '@/components/ui/Select';
 import { Spinner } from '@/components/ui/Spinner';
 import { AnalyticsSummary } from '@/lib/types';
@@ -130,15 +130,35 @@ export default function AnalyticsPage() {
 
       {/* Charts */}
       {summary && totalClicks > 0 ? (
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Card>
-            <CardHeader>
-              <CardTitle>Analytics Overview</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-on-surface-variant text-center py-8">
-                Detailed analytics will be available as you gather more click data
-              </p>
+            <CardContent className="pt-6">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="material-symbols-outlined text-primary text-2xl">public</span>
+                <h3 className="text-sm font-semibold text-on-surface uppercase tracking-wider">Top Referrer</h3>
+              </div>
+              <p className="text-2xl font-bold text-on-surface truncate">{summary?.top_referrer || 'Direct'}</p>
+              <p className="text-xs text-on-surface-variant mt-1">Most clicks from this source</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="material-symbols-outlined text-secondary text-2xl">devices</span>
+                <h3 className="text-sm font-semibold text-on-surface uppercase tracking-wider">Top Device</h3>
+              </div>
+              <p className="text-2xl font-bold text-on-surface truncate">{summary?.top_device || 'Unknown'}</p>
+              <p className="text-xs text-on-surface-variant mt-1">Most common device type</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="material-symbols-outlined text-tertiary text-2xl">language</span>
+                <h3 className="text-sm font-semibold text-on-surface uppercase tracking-wider">Top Country</h3>
+              </div>
+              <p className="text-2xl font-bold text-on-surface truncate">{topCountry}</p>
+              <p className="text-xs text-on-surface-variant mt-1">Most clicks from this region</p>
             </CardContent>
           </Card>
         </div>

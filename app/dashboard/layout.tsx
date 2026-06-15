@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession, signOut } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 
@@ -19,7 +19,7 @@ const NAV_ITEMS: NavItem[] = [
   { id: 'settings', label: 'Settings', icon: 'settings' },
 ];
 
-function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -177,7 +177,7 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
             className="text-on-surface-variant hover:text-on-surface flex items-center gap-3 px-4 py-3 text-xs uppercase tracking-[0.2em]"
             onClick={() => setSidebarOpen(!sidebarOpen)}
           >
-            <span className="material-symbols-outlined">menu_open</span>
+            <span className="material-symbols-outlined">{sidebarOpen ? 'menu_open' : 'menu'}</span>
             {sidebarOpen && <span>Collapse</span>}
           </button>
         </div>
@@ -197,13 +197,5 @@ function DashboardLayoutContent({ children }: { children: React.ReactNode }) {
         {children}
       </main>
     </div>
-  );
-}
-
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <DashboardLayoutContent>
-      {children}
-    </DashboardLayoutContent>
   );
 }

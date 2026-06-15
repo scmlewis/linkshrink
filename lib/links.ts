@@ -30,7 +30,7 @@ export async function createLink(
     let shortCode = options?.customAlias || generateShortCode(6);
 
     // Create link with retry on conflict
-    const { data: link, error } = await supabaseAdmin
+    let result = await supabaseAdmin
       .from('links')
       .insert([
         {
@@ -45,35 +45,30 @@ export async function createLink(
         },
       ])
       .select()
-      .single()
-      .catch(async (insertError) => {
-        // If custom alias conflicts, generate a new one
-        if (options?.customAlias && insertError.code === '23505') {
-          const newShortCode = generateShortCode(6);
-          const { data: retryLink, error: retryError } = await supabaseAdmin
-            .from('links')
-            .insert([
-              {
-                user_id: userId,
-                short_code: newShortCode,
-                original_url: normalizedUrl,
-                custom_alias: options?.customAlias,
-                title: options?.title,
-                nickname: options?.nickname,
-                description: options?.description,
-                is_active: true,
-              },
-            ])
-            .select()
-            .single();
-          
-          if (retryError) {
-            return { data: null, error: retryError };
-          }
-          return { data: retryLink, error: null };
-        }
-        return { data: null, error: insertError };
-      });
+      .single();
+
+    // If custom alias conflicts, generate a new one and retry
+    if (result.error && options?.customAlias && (result.error as any).code === '23505') {
+      const newShortCode = generateShortCode(6);
+      result = await supabaseAdmin
+        .from('links')
+        .insert([
+          {
+            user_id: userId,
+            short_code: newShortCode,
+            original_url: normalizedUrl,
+            custom_alias: options?.customAlias,
+            title: options?.title,
+            nickname: options?.nickname,
+            description: options?.description,
+            is_active: true,
+          },
+        ])
+        .select()
+        .single();
+    }
+
+    const { data: link, error } = result;
 
     if (error) {
       return {

@@ -33,6 +33,8 @@ vi.mock('next-auth/react', () => ({
 beforeEach(() => {
   vi.resetAllMocks();
   pathnameMock.mockReturnValue('/dashboard/links');
+  // Mock scrollTo for jsdom
+  Element.prototype.scrollTo = vi.fn();
 });
 
 describe('Button', () => {

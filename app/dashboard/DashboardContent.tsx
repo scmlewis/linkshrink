@@ -18,6 +18,7 @@ export default function DashboardContent() {
       {tab === 'analytics' && <AnalyticsPage />}
       {tab === 'api-keys' && <ApiKeysPage />}
       {tab === 'settings' && <SettingsPage />}
+      {!['home', 'links', 'analytics', 'api-keys', 'settings'].includes(tab) && <DashboardHome />}
     </>
   );
 }
