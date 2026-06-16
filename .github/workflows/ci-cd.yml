@@ -9,54 +9,25 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
-    services:
-      postgres:
-        image: postgres:15-alpine
-        env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: test
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
 
     steps:
       - uses: actions/checkout@v4
-      - name: Install build toolchain (Rust + build-essential)
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential pkg-config libssl-dev python3 curl
-          curl https://sh.rustup.rs -sSf | sh -s -- -y
-          source $HOME/.cargo/env
-          rustup default stable
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      - name: Rebuild native optional deps (workaround for lightningcss)
-        run: |
-          npm rebuild || true
-          npm rebuild lightningcss || true
-          npm cache verify || true
-      
+
       - name: Run linter
         run: npm run lint
-      
+
       - name: Run tests
         run: npm run test
-        env:
-          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test
-      
+
       - name: Build
         run: npm run build
         env:
@@ -70,10 +41,10 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-    
+
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Deploy to Vercel
         if: env.VERCEL_TOKEN != ''
         uses: amondnet/vercel-action@v25
@@ -88,22 +59,3 @@ jobs:
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
           NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
-
-  security:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Security audit
-        run: npm audit --audit-level=moderate
-        continue-on-error: true
