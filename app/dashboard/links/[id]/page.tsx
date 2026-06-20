@@ -6,8 +6,10 @@ import { Card, CardContent } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Spinner } from '@/components/ui/Spinner';
 import { Badge } from '@/components/ui/Badge';
+import { StatCard } from '@/components/ui/StatCard';
 import { Link as LinkType, LinkAnalytics } from '@/lib/types';
 import { formatDate, formatNumber, buildShortUrl, copyToClipboard } from '@/lib/utils';
+import { cachedFetch } from '@/lib/fetchCache';
 
 export default function LinkDetailPage() {
   const params = useParams();
@@ -23,23 +25,13 @@ export default function LinkDetailPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [linkRes, analyticsRes] = await Promise.all([
-          fetch(`/api/links/${linkId}`),
-          fetch(`/api/analytics/${linkId}`),
+        const [linkData, analyticsData] = await Promise.all([
+          cachedFetch<LinkType>(`/api/links/${linkId}`),
+          cachedFetch<LinkAnalytics>(`/api/analytics/${linkId}`),
         ]);
 
-        if (!linkRes.ok) {
-          setError('Link not found');
-          return;
-        }
-
-        const linkData = await linkRes.json();
         setLink(linkData);
-
-        if (analyticsRes.ok) {
-          const analyticsData = await analyticsRes.json();
-          setAnalytics(analyticsData);
-        }
+        setAnalytics(analyticsData);
       } catch {
         setError('Failed to load link details');
       } finally {
@@ -154,38 +146,26 @@ export default function LinkDetailPage() {
 
       {/* Stats Overview */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card>
-          <CardContent className="pt-6">
-            <div className="text-3xl font-bold text-primary mb-1">
-              {formatNumber(analytics?.total_clicks || link.click_count)}
-            </div>
-            <div className="text-sm text-on-surface-variant">Total Clicks</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-6">
-            <div className="text-3xl font-bold text-secondary mb-1 truncate" title={analytics?.referrers?.[0]?.referrer || 'Direct'}>
-              {analytics?.referrers?.[0]?.referrer || 'Direct'}
-            </div>
-            <div className="text-sm text-on-surface-variant">Top Referrer</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-6">
-            <div className="text-3xl font-bold text-tertiary mb-1 truncate" title={analytics?.devices?.[0]?.device_type || 'Unknown'}>
-              {analytics?.devices?.[0]?.device_type || 'Unknown'}
-            </div>
-            <div className="text-sm text-on-surface-variant">Top Device</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-6">
-            <div className="text-3xl font-bold text-primary-container mb-1 truncate" title={analytics?.countries?.[0]?.country || 'Unknown'}>
-              {analytics?.countries?.[0]?.country || 'Unknown'}
-            </div>
-            <div className="text-sm text-on-surface-variant">Top Country</div>
-          </CardContent>
-        </Card>
+        <StatCard
+          label="Total Clicks"
+          value={formatNumber(analytics?.total_clicks || link.click_count)}
+          color="primary"
+        />
+        <StatCard
+          label="Top Referrer"
+          value={analytics?.referrers?.[0]?.referrer || 'Direct'}
+          color="secondary"
+        />
+        <StatCard
+          label="Top Device"
+          value={analytics?.devices?.[0]?.device_type || 'Unknown'}
+          color="tertiary"
+        />
+        <StatCard
+          label="Top Country"
+          value={analytics?.countries?.[0]?.country || 'Unknown'}
+          color="primary-container"
+        />
       </div>
 
       {/* Analytics Breakdowns */}

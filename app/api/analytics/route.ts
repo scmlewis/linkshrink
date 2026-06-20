@@ -1,11 +1,11 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/auth';
 import { getUserAnalyticsSummary } from '@/lib/analytics';
 
 /**
  * GET /api/analytics - Get user analytics summary
  */
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     const session = await auth();
 
@@ -13,7 +13,8 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const response = await getUserAnalyticsSummary(session.user.id);
+    const range = req.nextUrl.searchParams.get('range') || 'all';
+    const response = await getUserAnalyticsSummary(session.user.id, range);
 
     if (!response.success) {
       return NextResponse.json({ error: response.error }, { status: 400 });

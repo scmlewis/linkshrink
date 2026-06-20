@@ -16,23 +16,20 @@ export async function recordClick(
   try {
     const { device_type, os, browser } = parseUserAgent(request.user_agent || '');
 
-    // Try to get geo data (optional) - run in background
     let country = 'Unknown';
     let city = 'Unknown';
 
     if (request.ip_address) {
-      const geoPromise = fetch(`https://ipapi.co/${request.ip_address}/json/`).then(async (geoResponse) => {
+      try {
+        const geoResponse = await fetch(`https://ipapi.co/${request.ip_address}/json/`);
         if (geoResponse.ok) {
           const geoData = await geoResponse.json();
           country = geoData.country_name || 'Unknown';
           city = geoData.city || 'Unknown';
         }
-      }).catch(() => {
-        // Silently fail geo lookup - not critical for recording click
-      });
-      
-      // Don't await geo lookup to avoid blocking
-      geoPromise.catch(() => {});
+      } catch {
+        // Geo lookup is optional — keep defaults
+      }
     }
 
     const { data: record, error } = await supabaseAdmin
@@ -79,10 +76,10 @@ export async function recordClick(
  */
 export async function getLinkAnalytics(linkId: string): Promise<ApiResponse<LinkAnalytics>> {
   try {
-    // Get all analytics records for the link
+    // Only select columns we aggregate on
     const { data: records, error } = await supabaseAdmin
       .from('analytics')
-      .select('*')
+      .select('clicked_at, referrer, device_type, country, browser, os')
       .eq('link_id', linkId)
       .order('clicked_at', { ascending: true });
 
@@ -195,12 +192,28 @@ export async function getLinkAnalytics(linkId: string): Promise<ApiResponse<Link
   }
 }
 
+function getStartDate(range: string): Date | null {
+  const now = new Date();
+  switch (range) {
+    case '7days':
+      return new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    case '30days':
+      return new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+    case '90days':
+      return new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+    default:
+      return null;
+  }
+}
+
 /**
  * Get overall analytics summary for a user
  */
-export async function getUserAnalyticsSummary(userId: string): Promise<ApiResponse<AnalyticsSummary>> {
+export async function getUserAnalyticsSummary(
+  userId: string,
+  range: string = 'all'
+): Promise<ApiResponse<AnalyticsSummary>> {
   try {
-    // Get all user's links
     const { data: links, error: linksError } = await supabaseAdmin
       .from('links')
       .select('id')
@@ -221,16 +234,23 @@ export async function getUserAnalyticsSummary(userId: string): Promise<ApiRespon
         data: {
           total_clicks: 0,
           clicks_today: 0,
-          average_ctr: 0,
         },
       };
     }
 
-    // Get analytics
-    const { data: analytics, error: analyticsError } = await supabaseAdmin
+    const startDate = getStartDate(range);
+
+    // Only select columns we actually aggregate on
+    let query = supabaseAdmin
       .from('analytics')
-      .select('*')
+      .select('referrer, country, device_type, clicked_at')
       .in('link_id', linkIds);
+
+    if (startDate) {
+      query = query.gte('clicked_at', startDate.toISOString());
+    }
+
+    const { data: analytics, error: analyticsError } = await query;
 
     if (analyticsError) {
       return {
@@ -246,31 +266,24 @@ export async function getUserAnalyticsSummary(userId: string): Promise<ApiRespon
     today.setHours(0, 0, 0, 0);
     const clicks_today = analytics?.filter((a) => new Date(a.clicked_at) >= today).length || 0;
 
-    // Top referrer
+    // Aggregate top values in a single pass
     const referrerCounts: Record<string, number> = {};
+    const countryCounts: Record<string, number> = {};
+    const deviceCounts: Record<string, number> = {};
+
     analytics?.forEach((a) => {
       const ref = a.referrer || 'Direct';
       referrerCounts[ref] = (referrerCounts[ref] || 0) + 1;
-    });
 
-    const top_referrer = Object.entries(referrerCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || 'Direct';
-
-    // Top country
-    const countryCounts: Record<string, number> = {};
-    analytics?.forEach((a) => {
       const country = a.country || 'Unknown';
       countryCounts[country] = (countryCounts[country] || 0) + 1;
-    });
 
-    const top_country = Object.entries(countryCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || 'Unknown';
-
-    // Top device
-    const deviceCounts: Record<string, number> = {};
-    analytics?.forEach((a) => {
       const device = a.device_type || 'Unknown';
       deviceCounts[device] = (deviceCounts[device] || 0) + 1;
     });
 
+    const top_referrer = Object.entries(referrerCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || 'Direct';
+    const top_country = Object.entries(countryCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || 'Unknown';
     const top_device = Object.entries(deviceCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || 'Unknown';
 
     return {
@@ -278,7 +291,6 @@ export async function getUserAnalyticsSummary(userId: string): Promise<ApiRespon
       data: {
         total_clicks,
         clicks_today,
-        average_ctr: 0, // Would need impression data to calculate
         top_referrer,
         top_country,
         top_device,

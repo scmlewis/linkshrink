@@ -47,7 +47,6 @@ export interface AnalyticsRecord {
 export interface AnalyticsSummary {
   total_clicks: number;
   clicks_today: number;
-  average_ctr: number;
   top_referrer?: string;
   top_country?: string;
   top_device?: string;

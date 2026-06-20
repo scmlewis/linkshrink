@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Select } from '@/components/ui/Select';
 import { Spinner } from '@/components/ui/Spinner';
+import { StatCard } from '@/components/ui/StatCard';
 import { AnalyticsSummary } from '@/lib/types';
 import { formatNumber } from '@/lib/utils';
 import { cachedFetch } from '@/lib/fetchCache';
@@ -70,99 +71,15 @@ export default function AnalyticsPage() {
       {/* Overview Cards */}
       {summary && (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-3xl font-bold text-primary mb-1">
-                    {formatNumber(totalClicks)}
-                  </div>
-                  <div className="text-sm text-on-surface-variant">Total Clicks</div>
-                </div>
-                <span className="material-symbols-outlined text-primary text-3xl opacity-30">touch_app</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-3xl font-bold text-secondary mb-1">
-                    {formatNumber(clicksToday)}
-                  </div>
-                  <div className="text-sm text-on-surface-variant">Today</div>
-                </div>
-                <span className="material-symbols-outlined text-secondary text-3xl opacity-30">today</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-start justify-between">
-                <div className="min-w-0 flex-1">
-                  <div className="text-3xl font-bold text-tertiary mb-1 truncate" title={summary?.top_referrer || 'Direct'}>
-                    {summary?.top_referrer || 'Direct'}
-                  </div>
-                  <div className="text-sm text-on-surface-variant">Top Referrer</div>
-                </div>
-                <span className="material-symbols-outlined text-tertiary text-3xl opacity-30 flex-shrink-0 ml-2">public</span>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-start justify-between">
-                <div>
-                  <div className="text-3xl font-bold text-primary-container mb-1">
-                    {topCountry}
-                  </div>
-                  <div className="text-sm text-on-surface-variant">Top Country</div>
-                </div>
-                <span className="material-symbols-outlined text-primary-container text-3xl opacity-30">language</span>
-              </div>
-            </CardContent>
-          </Card>
+          <StatCard label="Total Clicks" value={formatNumber(totalClicks)} icon="touch_app" color="primary" />
+          <StatCard label="Today" value={formatNumber(clicksToday)} icon="today" color="secondary" />
+          <StatCard label="Top Referrer" value={summary?.top_referrer || 'Direct'} icon="public" color="tertiary" />
+          <StatCard label="Top Country" value={topCountry} icon="language" color="primary-container" />
         </div>
       )}
 
-      {/* Charts */}
-      {summary && totalClicks > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="material-symbols-outlined text-primary text-2xl">public</span>
-                <h3 className="text-sm font-semibold text-on-surface uppercase tracking-wider">Top Referrer</h3>
-              </div>
-              <p className="text-2xl font-bold text-on-surface truncate">{summary?.top_referrer || 'Direct'}</p>
-              <p className="text-xs text-on-surface-variant mt-1">Most clicks from this source</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="material-symbols-outlined text-secondary text-2xl">devices</span>
-                <h3 className="text-sm font-semibold text-on-surface uppercase tracking-wider">Top Device</h3>
-              </div>
-              <p className="text-2xl font-bold text-on-surface truncate">{summary?.top_device || 'Unknown'}</p>
-              <p className="text-xs text-on-surface-variant mt-1">Most common device type</p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center gap-3 mb-4">
-                <span className="material-symbols-outlined text-tertiary text-2xl">language</span>
-                <h3 className="text-sm font-semibold text-on-surface uppercase tracking-wider">Top Country</h3>
-              </div>
-              <p className="text-2xl font-bold text-on-surface truncate">{topCountry}</p>
-              <p className="text-xs text-on-surface-variant mt-1">Most clicks from this region</p>
-            </CardContent>
-          </Card>
-        </div>
-      ) : (
+      {/* Empty state */}
+      {summary && totalClicks === 0 && (
         <Card>
           <CardContent className="py-12 text-center">
             <div className="space-y-4">
